@@ -1,9 +1,6 @@
 """Tests for vault.py."""
 
-import os
-import tempfile
 import threading
-import time
 from datetime import datetime, timedelta, timezone
 
 import pytest
@@ -12,10 +9,7 @@ from pvm.models import AuditEntryType, Decision, Grant
 from pvm.vault import Vault
 
 
-@pytest.fixture
-def vault(tmp_path):
-    db = str(tmp_path / "test.db")
-    return Vault(db)
+# vault fixture is defined in conftest.py (uses UUID in-memory SQLite, isolated per test)
 
 
 class TestVaultGrantLifecycle:
@@ -69,26 +63,24 @@ class TestVaultGrantLifecycle:
         )
         assert vault.check_grant("test-agent", "/tmp/other") is False
 
-    def test_check_grant_expired(self, vault, tmp_path):
-        db = str(tmp_path / "expire.db")
-        v = Vault(db)
-        # Create grant with 0 TTL
-        grant = v.create_grant(
+    def test_check_grant_expired(self, vault):
+        """Grant is denied once its TTL has passed."""
+        grant = vault.create_grant(
             agent_id="test-agent",
             scope="/tmp/test",
             scope_type="path",
             reason="testing",
-            ttl_minutes=0,
+            ttl_minutes=1,
         )
-        # Force expiry by updating expires_at via the vault's own connection
+        # Backdate expires_at to 5 minutes in the past via the vault's own tx
         past = (datetime.now(timezone.utc) - timedelta(minutes=5)).isoformat()
         with vault._tx() as conn:
             conn.execute(
                 "UPDATE grants SET expires_at = ? WHERE grant_id = ?",
                 (past, grant.grant_id),
             )
-
-        assert v.check_grant("test-agent", "/tmp/test") is False
+        # check_grant calls _purge_expired first, which marks expired → revoked
+        assert vault.check_grant("test-agent", "/tmp/test") is False
 
     def test_revoke_grant(self, vault):
         grant = vault.create_grant(
@@ -99,7 +91,12 @@ class TestVaultGrantLifecycle:
             ttl_minutes=10,
         )
         vault.revoke_grant(grant.grant_id)
+        # Revoked grants are not active
         assert vault.check_grant("test-agent", "/tmp/test") is False
+        # Can still fetch the grant record itself
+        fetched = vault.get_grant(grant.grant_id)
+        assert fetched is not None
+        assert fetched.revoked is True
 
     def test_get_active_grants(self, vault):
         vault.create_grant(
@@ -245,13 +242,19 @@ class TestVaultAuditLog:
 
 
 class TestVaultThreadSafety:
-    def test_concurrent_grants(self, vault):
+    def test_concurrent_grants(self, tmp_path):
+        """Multiple threads writing to the same vault simultaneously — no data loss."""
+        # Use a file-based DB for this test: in-memory SQLite doesn't handle
+        # concurrent writes well even with cache=shared due to locking.
+        db_path = str(tmp_path / "concurrent.db")
+        shared_vault = Vault(db_path)
+
         errors = []
 
         def writer(agent_id: str):
             try:
                 for i in range(10):
-                    vault.create_grant(
+                    shared_vault.create_grant(
                         agent_id=agent_id,
                         scope=f"/tmp/{agent_id}/{i}",
                         scope_type="path",
@@ -268,6 +271,6 @@ class TestVaultThreadSafety:
         t1.join()
         t2.join()
 
-        assert not errors
-        grants = vault.get_active_grants()
+        assert not errors, f"Thread errors: {errors}"
+        grants = shared_vault.get_active_grants()
         assert len(grants) == 20

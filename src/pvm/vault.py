@@ -15,9 +15,10 @@ from .models import AuditEntry, AuditEntryType, Decision, Grant
 class Vault:
     """Thread-safe SQLite vault for grants and audit logs."""
 
-    def __init__(self, db_path: str = "./grants.db"):
+    def __init__(self, db_path: str = "./grants.db", uri: bool = False):
         self.db_path = db_path
         self._local = threading.local()
+        self._uri = uri
         self._init_db()
 
     # ── Connection management ────────────────────────────────────────────────
@@ -25,7 +26,10 @@ class Vault:
     def _get_conn(self) -> sqlite3.Connection:
         """Get a thread-local DB connection, creating if needed."""
         if not hasattr(self._local, "conn") or self._local.conn is None:
-            self._local.conn = sqlite3.connect(self.db_path, check_same_thread=False)
+            kw = {"check_same_thread": False}
+            if self._uri:
+                kw["uri"] = True
+            self._local.conn = sqlite3.connect(self.db_path, **kw)
             self._local.conn.row_factory = sqlite3.Row
         return self._local.conn
 

@@ -37,6 +37,7 @@ class TelegramChannel(NotificationChannel):
             scope=scope,
             reason=reason,
             ttl_minutes=ttl_minutes,
+            approval_token=approval_token,
         )
         errors = []
         success = False

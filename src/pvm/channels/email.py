@@ -49,6 +49,7 @@ class EmailChannel(NotificationChannel):
             scope=scope,
             reason=reason,
             ttl_minutes=ttl_minutes,
+            approval_token=approval_token,
         )
         html_message = self._format_html(
             message,

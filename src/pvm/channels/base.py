@@ -47,6 +47,7 @@ class NotificationChannel(ABC):
         scope: Optional[str] = None,
         reason: Optional[str] = None,
         ttl_minutes: Optional[int] = None,
+        approval_token: Optional[str] = None,
     ) -> str:
         """Format the approval request message."""
         lines = [
@@ -59,7 +60,7 @@ class NotificationChannel(ABC):
             f"",
             f"{message}",
             f"",
-            f"Approval token: {approval_token}",
+            f"Approval token: {approval_token or 'N/A'}",
             f"",
             f"Reply APPROVE or DENY to this message.",
         ]

@@ -1,15 +1,17 @@
-"""Sendblue (iMessage/SMS) notification channel."""
+"""Sendblue (iMessage/SMS) notification channel via CLI.
+
+Uses the sendblue CLI (installed at /opt/homebrew/bin/sendblue) rather than the
+REST API, since CLI auth is already configured on the system.
+"""
 
 import logging
+import subprocess
+import tempfile
 from typing import Optional
-
-import requests
 
 from .base import NotificationChannel, NotificationResult
 
 logger = logging.getLogger(__name__)
-
-SEND_URL = "https://api.sendblue.co/api/send-sms"
 
 
 class SendblueChannel(NotificationChannel):
@@ -17,11 +19,10 @@ class SendblueChannel(NotificationChannel):
 
     def __init__(
         self,
-        api_key: str,
+        api_key: str,  # kept for compatibility; CLI uses its own credentials
         from_number: str,
         approver_numbers: list[str],
     ):
-        self.api_key = api_key
         self.from_number = from_number
         self.approver_numbers = approver_numbers
 
@@ -42,24 +43,22 @@ class SendblueChannel(NotificationChannel):
             scope=scope,
             reason=reason,
             ttl_minutes=ttl_minutes,
+            approval_token=approval_token,
         )
+
         errors = []
         for number in self.approver_numbers:
             try:
-                resp = requests.post(
-                    SEND_URL,
-                    json={
-                        "api_key": self.api_key,
-                        "from_number": self.from_number,
-                        "to_number": number,
-                        "message": full_message,
-                    },
-                    headers={"Content-Type": "application/json"},
-                    timeout=15,
+                result = subprocess.run(
+                    ["sendblue", "send", number, full_message],
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
                 )
-                data = resp.json()
-                if resp.status_code != 200 or data.get("status") != "success":
-                    errors.append(f"{number}: {data}")
+                if result.returncode != 0:
+                    errors.append(f"{number}: {result.stderr.strip()}")
+                else:
+                    logger.info("Sendblue sent to %s: %s", number, result.stdout.strip())
             except Exception as exc:
                 errors.append(f"{number}: {exc}")
 
