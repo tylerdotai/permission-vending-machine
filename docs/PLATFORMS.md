@@ -10,7 +10,7 @@
 ### Install sendblue CLI
 
 ```bash
-brew install t穿衣痛点/sendblue/sendblue   # or pip install sendblue
+brew install sendblue   # or: pip install sendblue
 ```
 
 ### Install PVM
