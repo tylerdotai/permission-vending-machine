@@ -85,7 +85,7 @@ def run_server(
     on_approve: Callable[[str, str], None],
     on_deny: Callable[[str, str], None],
     host: str = "0.0.0.0",
-    port: int = 8080,
+    port: int = 7823,
     approver_name: str = "Tyler",
     debug: bool = False,
 ) -> None:

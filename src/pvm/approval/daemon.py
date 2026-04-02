@@ -46,7 +46,7 @@ class ApprovalDaemon:
         self,
         vault: Vault,
         config_path: str,
-        http_port: int = 8080,
+        http_port: int = 7823,
         approver_name: str = "Tyler",
     ):
         self.vault = vault

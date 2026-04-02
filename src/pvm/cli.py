@@ -299,13 +299,13 @@ def main() -> int:
     # pvm serve (HTTP server only)
     sv = sub.add_parser("serve", help="Run the HTTP approval server")
     sv.add_argument("--host", default="0.0.0.0")
-    sv.add_argument("--port", type=int, default=8080)
+    sv.add_argument("--port", type=int, default=7823)
     sv.add_argument("--approver", help="Approver name")
     sv.set_defaults(func=cmd_serve)
 
     # pvm approve-daemon (full daemon)
     ad = sub.add_parser("approve-daemon", help="Run full approval daemon (email + Sendblue + HTTP)")
-    ad.add_argument("--port", type=int, default=8080)
+    ad.add_argument("--port", type=int, default=7823)
     ad.add_argument("--approver", help="Approver name")
     ad.set_defaults(func=cmd_approve_daemon)
 
