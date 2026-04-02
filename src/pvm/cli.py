@@ -305,10 +305,13 @@ def main() -> int:
 
     # pvm approve-daemon (full daemon)
     ad = sub.add_parser("approve-daemon", help="Run full approval daemon (email + Sendblue + HTTP)")
-    ad.add_argument("--config", default=DEFAULT_CONFIG)
     ad.add_argument("--port", type=int, default=7823)
     ad.add_argument("--approver", help="Approver name")
     ad.set_defaults(func=cmd_approve_daemon)
+
+    # pvm init — interactive setup wizard
+    init = sub.add_parser("init", help="Run interactive setup wizard")
+    init.set_defaults(func=lambda args: __import__("pvm.setup_wizard", fromlist=["main"]).main())
 
     args = parser.parse_args()
     return args.func(args)
