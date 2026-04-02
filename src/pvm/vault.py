@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Generator, List, Optional
 
-from .models import AuditEntry, AuditEntryType, Decision, Grant
+from .models import AuditEntry, AuditEntryType, Decision, Grant, PermissionRequest
 
 
 class Vault:
@@ -60,7 +60,8 @@ class Vault:
                     issued_at       TEXT NOT NULL,
                     expires_at      TEXT NOT NULL,
                     revoked         INTEGER NOT NULL DEFAULT 0,
-                    approved_by     TEXT
+                    approved_by     TEXT,
+                    approval_token  TEXT
                 );
 
                 CREATE INDEX IF NOT EXISTS idx_grants_agent
@@ -69,6 +70,30 @@ class Vault:
                     ON grants(scope);
                 CREATE INDEX IF NOT EXISTS idx_grants_expires
                     ON grants(expires_at);
+                CREATE INDEX IF NOT EXISTS idx_grants_token
+                    ON grants(approval_token);
+
+                CREATE TABLE IF NOT EXISTS permission_requests (
+                    request_id      TEXT PRIMARY KEY,
+                    agent_id        TEXT NOT NULL,
+                    operation       TEXT NOT NULL,
+                    scope           TEXT NOT NULL,
+                    scope_type      TEXT NOT NULL,
+                    reason          TEXT NOT NULL,
+                    ttl_minutes     INTEGER NOT NULL,
+                    approval_token  TEXT NOT NULL,
+                    status          TEXT NOT NULL DEFAULT 'pending',
+                    created_at      TEXT NOT NULL,
+                    decided_by      TEXT,
+                    decided_at      TEXT
+                );
+
+                CREATE INDEX IF NOT EXISTS idx_requests_token
+                    ON permission_requests(approval_token);
+                CREATE INDEX IF NOT EXISTS idx_requests_agent
+                    ON permission_requests(agent_id);
+                CREATE INDEX IF NOT EXISTS idx_requests_status
+                    ON permission_requests(status);
 
                 CREATE TABLE IF NOT EXISTS audit_log (
                     entry_id    TEXT PRIMARY KEY,
@@ -99,6 +124,7 @@ class Vault:
         reason: str,
         ttl_minutes: int,
         approved_by: Optional[str] = None,
+        approval_token: Optional[str] = None,
     ) -> Grant:
         """Create and persist a new grant."""
         grant = Grant.create(
@@ -114,8 +140,8 @@ class Vault:
                 """
                 INSERT INTO grants
                     (grant_id, agent_id, scope, scope_type, reason,
-                     issued_at, expires_at, revoked, approved_by)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                     issued_at, expires_at, revoked, approved_by, approval_token)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     grant.grant_id,
@@ -127,17 +153,113 @@ class Vault:
                     grant.expires_at.isoformat(),
                     0,
                     grant.approved_by,
+                    approval_token,
                 ),
+            )
+        # Update the permission request status if a token was provided
+        if approval_token:
+            conn.execute(
+                """
+                UPDATE permission_requests
+                SET status = 'approved', decided_by = ?, decided_at = ?
+                WHERE approval_token = ? AND status = 'pending'
+                """,
+                (approved_by, datetime.now(timezone.utc).isoformat(), approval_token),
             )
         self.log_audit(
             entry_type=AuditEntryType.APPROVAL,
             agent_id=agent_id,
             scope=scope,
             decision=Decision.GRANTED,
-            details=f"Grant {grant.grant_id} issued for {ttl_minutes}min to {agent_id}: {scope}",
+            details=f"Grant {grant.grant_id} issued for {ttl_minutes}min to {agent_id}: {scope} (token={approval_token})",
             grant_id=grant.grant_id,
         )
         return grant
+
+    def create_request(
+        self,
+        agent_id: str,
+        operation: str,
+        scope: str,
+        scope_type: str,
+        reason: str,
+        ttl_minutes: int,
+        approval_token: str,
+    ) -> str:
+        """Create a pending permission request. Returns request_id."""
+        req = PermissionRequest.create(
+            agent_id=agent_id,
+            operation=operation,
+            scope=scope,
+            scope_type=scope_type,
+            reason=reason,
+            ttl_minutes=ttl_minutes,
+        )
+        req.approval_token = approval_token  # use the token we already have
+        with self._tx() as conn:
+            conn.execute(
+                """
+                INSERT INTO permission_requests
+                    (request_id, agent_id, operation, scope, scope_type,
+                     reason, ttl_minutes, approval_token, status, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?)
+                """,
+                (
+                    req.request_id,
+                    req.agent_id,
+                    req.operation,
+                    req.scope,
+                    req.scope_type,
+                    req.reason,
+                    req.ttl_minutes,
+                    req.approval_token,
+                    datetime.now(timezone.utc).isoformat(),
+                ),
+            )
+        self.log_audit(
+            entry_type=AuditEntryType.REQUEST,
+            agent_id=agent_id,
+            scope=scope,
+            decision=None,
+            details=f"Permission request {req.request_id} created: {operation} on {scope} (token={approval_token})",
+        )
+        return req.request_id
+
+    def get_request_by_token(self, approval_token: str) -> Optional[dict]:
+        """Get a pending permission request by its approval token."""
+        with self._tx() as conn:
+            row = conn.execute(
+                """
+                SELECT * FROM permission_requests
+                WHERE approval_token = ? AND status = 'pending'
+                """,
+                (approval_token,),
+            ).fetchone()
+        if not row:
+            return None
+        return dict(row)
+
+    def deny_request(self, approval_token: str, denied_by: str) -> None:
+        """Mark a permission request as denied."""
+        with self._tx() as conn:
+            conn.execute(
+                """
+                UPDATE permission_requests
+                SET status = 'denied', decided_by = ?, decided_at = ?
+                WHERE approval_token = ? AND status = 'pending'
+                """,
+                (denied_by, datetime.now(timezone.utc).isoformat(), approval_token),
+            )
+        entries = self.get_audit_log(limit=1000)
+        matching = [e for e in entries if approval_token in (e.details or "")]
+        latest = matching[0] if matching else None
+        self.log_audit(
+            entry_type=AuditEntryType.DENIAL,
+            agent_id=latest.agent_id if latest else None,
+            scope=latest.scope if latest else None,
+            decision=Decision.DENIED,
+            details=f"Request {approval_token} denied by {denied_by}",
+        )
 
     def check_grant(self, agent_id: str, scope: str) -> bool:
         """

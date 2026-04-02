@@ -33,22 +33,30 @@ def cmd_request(args: argparse.Namespace) -> int:
     from .models import PermissionRequest
     from .approval.polling import ApprovalPoller
 
+    ttl = min(
+        args.duration or notifier.default_ttl_minutes(),
+        notifier.max_ttl_minutes(),
+    )
+    agent_id = args.agent_id or os.environ.get("AGENT_ID", "default")
+
+    # Create the permission request in the vault
     request = PermissionRequest.create(
-        agent_id=args.agent_id or os.environ.get("AGENT_ID", "default"),
+        agent_id=agent_id,
         operation=args.operation or "unknown",
         scope=args.scope,
         scope_type=args.scope_type or "path",
         reason=args.reason or "",
-        ttl_minutes=min(args.duration or notifier.default_ttl_minutes(),
-                        notifier.max_ttl_minutes()),
+        ttl_minutes=ttl,
     )
 
-    vault.log_audit(
-        entry_type=__import__("pvm.models", fromlist=["AuditEntryType"]).AuditEntryType.REQUEST,
-        agent_id=request.agent_id,
-        scope=request.scope,
-        decision=Decision.DENIED,
-        details=f"Permission request created: {request.request_id} for {request.scope}",
+    vault.create_request(
+        agent_id=agent_id,
+        operation=args.operation or "unknown",
+        scope=args.scope,
+        scope_type=args.scope_type or "path",
+        reason=args.reason or "",
+        ttl_minutes=ttl,
+        approval_token=request.approval_token,
     )
 
     print(f"Requesting approval for: {request.scope}")
@@ -59,7 +67,7 @@ def cmd_request(args: argparse.Namespace) -> int:
     results = notifier.notify_approvers(
         message=args.reason or "Please approve this operation.",
         approval_token=request.approval_token,
-        agent_id=request.agent_id,
+        agent_id=agent_id,
         scope=request.scope,
         reason=request.reason,
         ttl_minutes=request.ttl_minutes,
@@ -88,8 +96,11 @@ def cmd_request(args: argparse.Namespace) -> int:
             print("⏰ Timed out — no approval received.")
             return 1
     else:
-        print("\nNot blocking. Approve via any configured channel, then run your command.")
-        print(f"Approval token: {request.approval_token}")
+        print("\nNot blocking. Approve via any configured channel:")
+        print(f"  - iMessage: reply APPROVE {request.approval_token}")
+        print(f"  - Email: reply APPROVE in the email thread")
+        print(f"  - HTTP: POST http://localhost:8080/approve/{request.approval_token}")
+        print(f"\nOr start `pvm approve-daemon` to auto-detect approvals from all channels.")
 
     return 0
 
@@ -147,6 +158,89 @@ def cmd_log(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_serve(args: argparse.Namespace) -> int:
+    """Run the HTTP approval server (part of approve-daemon)."""
+    vault = _vault(args.config)
+
+    from .approval.server import run_server
+
+    def on_approve(token: str, approver: str) -> None:
+        req = vault.get_request_by_token(token)
+        if not req:
+            # Fallback: create grant with defaults
+            from .models import AuditEntryType, Decision
+            entries = vault.get_audit_log(limit=1000)
+            matching = [e for e in entries if token in (e.details or "")]
+            latest = matching[0] if matching else None
+            vault.create_grant(
+                agent_id=req["agent_id"] if req else (latest.agent_id if latest else "default"),
+                scope=req["scope"] if req else (latest.scope if latest else "/"),
+                scope_type=req["scope_type"] if req else "path",
+                reason=f"Approved by {approver}",
+                ttl_minutes=req["ttl_minutes"] if req else 30,
+                approved_by=approver,
+                approval_token=token,
+            )
+            return
+        vault.create_grant(
+            agent_id=req["agent_id"],
+            scope=req["scope"],
+            scope_type=req["scope_type"],
+            reason=f"Approved by {approver} via HTTP",
+            ttl_minutes=req["ttl_minutes"],
+            approved_by=approver,
+            approval_token=token,
+        )
+        print(f"[server] Grant created: token={token} by={approver}")
+
+    def on_deny(token: str, approver: str) -> None:
+        vault.deny_request(token, approver)
+        print(f"[server] Request denied: token={token} by={approver}")
+
+    print(f"Starting HTTP approval server on :{args.port}...")
+    print("Endpoints:")
+    print(f"  POST /approve/<token>  — Approve a request")
+    print(f"  POST /deny/<token>    — Deny a request")
+    print(f"  GET  /                — Status page")
+    run_server(
+        on_approve=on_approve,
+        on_deny=on_deny,
+        host=args.host,
+        port=args.port,
+        approver_name=args.approver or "Tyler",
+    )
+    return 0
+
+
+def cmd_approve_daemon(args: argparse.Namespace) -> int:
+    """Run the full approval daemon (email + Sendblue + HTTP server)."""
+    import logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
+
+    vault = _vault(args.config)
+
+    from .approval.daemon import ApprovalDaemon
+    daemon = ApprovalDaemon(
+        vault=vault,
+        config_path=args.config,
+        http_port=args.port,
+        approver_name=args.approver or "Tyler",
+    )
+
+    print("PVM Approval Daemon")
+    print("==================")
+    print(f"Config: {args.config}")
+    print(f"HTTP server: http://localhost:{args.port}")
+    print(f"Approve via: HTTP POST, email reply, Sendblue iMessage")
+    print()
+
+    daemon.start()
+    return 0
+
+
 def cmd_check(args: argparse.Namespace) -> int:
     vault = _vault(args.config)
     scope_type = args.scope_type or "path"
@@ -201,6 +295,19 @@ def main() -> int:
     c.add_argument("--agent-id", dest="agent_id", default="default")
     c.add_argument("--scope-type", default="path", choices=["path", "repo"])
     c.set_defaults(func=cmd_check)
+
+    # pvm serve (HTTP server only)
+    sv = sub.add_parser("serve", help="Run the HTTP approval server")
+    sv.add_argument("--host", default="0.0.0.0")
+    sv.add_argument("--port", type=int, default=8080)
+    sv.add_argument("--approver", help="Approver name")
+    sv.set_defaults(func=cmd_serve)
+
+    # pvm approve-daemon (full daemon)
+    ad = sub.add_parser("approve-daemon", help="Run full approval daemon (email + Sendblue + HTTP)")
+    ad.add_argument("--port", type=int, default=8080)
+    ad.add_argument("--approver", help="Approver name")
+    ad.set_defaults(func=cmd_approve_daemon)
 
     args = parser.parse_args()
     return args.func(args)
