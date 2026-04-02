@@ -1,130 +1,251 @@
 # Permission Vending Machine (PVM)
 
-<a href="https://pypi.python.org/pypi/pvm/"><img src="https://img.shields.io/pypi/v/pvm.svg" alt="pypi"></a>
-<a href="https://github.com/tylerdotai/permission-vending-machine/blob/main/LICENSE"><img src="https://img.shields.io/pypi/l/pvm.svg" alt="license"></a>
-<a href="https://github.com/tylerdotai/permission-vending-machine/actions"><img src="https://img.shields.io/github/actions/status/tylerdotai/permission-vending-machine/main.svg" alt="build"></a>
-<a href="https://pypi.python.org/pypi/pvm/"><img src="https://img.shields.io/pypi/pyversions/pvm.svg" alt="python"></a>
-
-**Local multi-channel approval system for AI agent permissions.** PVM gates sensitive operations (file deletion, force-push, trash) behind a human approver — notified via iMessage/SMS, Email, Discord, Telegram, or Slack.
+**Local multi-channel approval system for AI agent permissions.** PVM gates sensitive operations behind a human approver — notified via iMessage, Email, Discord, or clickable links — and enforces grants before running dangerous commands.
 
 ---
 
 ## Overview
 
-When an AI agent wants to run a guarded operation, it must request a time-limited grant from a human approver. PVM sends the request to every configured notification channel simultaneously, logs every decision, and enforces grants before running dangerous commands.
+When an AI agent wants to run a guarded operation (delete, force-push, etc.), it requests a time-limited grant. PVM notifies all configured channels simultaneously. The approver approves via any channel. Grants are checked before dangerous commands run.
 
 ```
 Agent                    PVM                       Approver
-  |                        |                          |
-  |--- request(scope) --->|                          |
-  |                        |--- notify all channels ->|
-  |                        |                          |
-  |                        |<-- approve/deny --------|
-  |                        |                          |
-  |<-- grant or deny -----|                          |
-  |                        |                          |
-  |--- check_grant() ---->|                           |
-  |<-- GRANTED ------------|                          |
-  |                        |                          |
-  |--- execute ------------|------------------------->|
+  |                        |                           |
+  |--- pvm request ------->|                           |
+  |                        |-- iMessage -------------> |
+  |                        |-- Email ----------------> |
+  |                        |-- Discord --------------> |
+  |                        |                           |
+  |                        |<-- APPROVE (any channel) |
+  |                        |                           |
+  |<-- grant activated ----|                           |
+  |                        |                           |
+  |--- safe-rm ----------->|                           |
+  |<-- GRANTED ------------|                           |
+  |                        |                           |
+  |--- executes -----------|-------------------------->|
 ```
+
+---
 
 ## Features
 
-- **SQLite grant registry** — durable, queryable, with TTL and revocation
-- **Audit log** — every DENIED/GRANTED/EXPIRED/REVOKED event captured
-- **5 notification channels** — Sendblue (iMessage/SMS), SMTP Email, Discord, Telegram, Slack
-- **Safe wrappers** — drop-in replacements for `rm`, `git push --force`, `trash` that check grants first
-- **Polling + callbacks** — poll approval sources or handle incoming webhook callbacks
-- **OpenClaw skill** — `pvm_request`, `pvm_status`, `pvm_revoke` tools for agent integration
+- **Grant registry** — SQLite vault with TTL, revocation, and path/repo scope matching
+- **Audit log** — every REQUEST/GRANTED/DENIED/EXPIRED/REVOKED event captured
+- **5 notification channels** — Sendblue (iMessage), SMTP Email, Discord webhook, Telegram, Slack
+- **3 approval detection channels** — Sendblue inbound polling, Email IMAP polling, HTTP clickable links
+- **Instant confirmation** — approver gets SMS/email feedback when they approve or deny
+- **Safe wrappers** — `safe-rm`, `safe-git-push`, `safe-trash` check grants before executing
+- **Persistent daemon** — runs as macOS launchd service (survives reboots)
+- **OpenClaw skill** — `pvm_request`, `pvm_status`, `pvm_revoke` for agent integration
 
 ---
 
 ## Install
 
 ```bash
-# Clone
 git clone https://github.com/tylerdotai/permission-vending-machine.git
 cd permission-vending-machine
-
-# Install
 pip install -e .
-
-# Or with poetry
-poetry install
 ```
 
-## Quick Start
-
-```bash
-# 1. Copy and edit config
-cp config.example.yaml config.yaml
-$EDITOR config.yaml   # fill in API keys and approver contacts
-
-# 2. Request a grant
-pvm request scope="delete:/Users/soup/flume/data/backups" \
-           reason="cleaning old backups" \
-           duration=5
-
-# 3. Approve via any channel (iMessage reply, Discord reaction, email link, etc.)
-
-# 4. Run the guarded command
-safe-rm -rf /Users/soup/flume/data/backups
-# → grant found, executes normally
-
-# 5. Check active grants
-pvm status agent_id="coder"
-
-# 6. Revoke early
-pvm revoke grant_id="grant_abc123"
-```
+**Requirements:** Python 3.9+, `sendblue` CLI (for iMessage), SQLite
 
 ---
 
-## Configuration
+## Quick Start
 
-All config via `config.yaml`. Environment variables supported with `${VAR}` syntax.
+### 1. Configure
 
-| Section | Key | Description |
-|---------|-----|-------------|
-| `vault.db_path` | path | SQLite database path (default: `./grants.db`) |
-| `vault.default_ttl_minutes` | int | Default grant TTL (default: 30) |
-| `vault.max_ttl_minutes` | int | Maximum allowed TTL (default: 480 = 8h) |
-| `channels.sendblue.*` | | Sendblue iMessage/SMS |
-| `channels.email.*` | | SMTP email |
-| `channels.discord.*` | | Discord webhook |
-| `channels.telegram.*` | | Telegram bot API |
-| `channels.slack.*` | | Slack webhook |
-| `permissions.guarded_operations` | list | Operations requiring approval |
-| `agent_workspaces` | dict | Per-agent workspace root paths |
+```bash
+cp config.example.yaml config.yaml
+# Edit config.yaml with your API keys and approver contacts
+```
 
-Full example: [`config.example.yaml`](config.example.yaml)
+Key settings:
+```yaml
+channels:
+  sendblue:
+    enabled: true
+    from_number: "+17862139363"
+    approver_numbers:
+      - "+1234567890"   # Tyler's number
+  email:
+    enabled: true
+    imap_host: "imap.mail.me.com"
+    username: "you@icloud.com"
+    password: "app-specific-password"
+  discord:
+    enabled: true
+    webhook_url: "https://discord.com/api/webhooks/..."
+    http_approval_base: "http://192.168.0.104:7823"  # your server IP
+```
+
+### 2. Start the daemon (runs 24/7)
+
+```bash
+# As a macOS launchd service (auto-starts on boot)
+launchctl load ~/Library/LaunchAgents/ai.flume.pvm.plist
+
+# Or manually in the foreground
+PYTHONPATH=src python3 -m pvm serve --port 7823
+```
+
+### 3. Agent requests approval
+
+```bash
+pvm request --scope "/tmp/build" --reason "cleaning old artifacts" --duration 5
+```
+
+PVM immediately notifies all channels. The approver approves via any channel.
+
+### 4. Approver approves — 4 ways
+
+| Method | How |
+|--------|-----|
+| **iMessage** | Reply `APPROVE` (no token needed — approves most recent) |
+| **Email** | Reply `APPROVE` in the email thread |
+| **Discord** | Click "Click to approve" link in the notification |
+| **HTTP** | `curl http://localhost:7823/approve/<token>` |
+
+Confirmation SMS is sent back to the approver after every approve/deny.
+
+### 5. Agent executes
+
+```bash
+safe-rm -rf /tmp/build
+# → grant found, executes
+# → grant not found → denied, exit 1
+```
 
 ---
 
 ## CLI Commands
 
 ```bash
-pvm request scope=<scope> reason=<reason> duration=<minutes>
-pvm status [agent_id=<id>]
-pvm revoke grant_id=<id>
-pvm log [--agent <id>] [--decision <decision>] [--limit <n>]
+# Request a permission grant
+pvm request --scope <path_or_repo> --reason <reason> --duration <minutes> --block
+
+# Block until approved (agent waits)
+pvm request --scope /tmp/data --reason "cleanup" --duration 5 --block --timeout 300
+
+# List active grants
+pvm status --agent-id coder
+
+# Revoke a grant early
+pvm revoke --grant-id grant_abc123
+
+# View audit log
+pvm log --limit 50
+
+# Check if a scope is currently granted
+pvm check --scope /tmp/build --agent-id hoss
+
+# Start the HTTP approval server (daemon mode)
+pvm serve --port 7823
+
+# Start full daemon (HTTP + email polling + Sendblue polling)
+pvm approve-daemon --port 7823
+```
+
+---
+
+## Configuration
+
+All settings in `config.yaml`. Environment variables supported via `${VAR}` syntax.
+
+### Vault
+
+```yaml
+vault:
+  db_path: "./grants.db"
+  default_ttl_minutes: 30
+  max_ttl_minutes: 480
+```
+
+### Channels
+
+Each channel is independently enabled. Only enable what you use.
+
+| Channel | Config keys | Notes |
+|---------|-------------|-------|
+| **Sendblue** | `api_key`, `from_number`, `approver_numbers` | iMessage + SMS. Uses CLI at `/opt/homebrew/bin/sendblue` |
+| **Email** | `imap_host`, `imap_port`, `username`, `password`, `smtp_host`, `approver_emails` | IMAP polling + SMTP sending |
+| **Discord** | `webhook_url`, `http_approval_base` | Webhook embeds with clickable approve/deny links |
+| **Telegram** | `bot_token`, `approver_chat_ids` | Bot API with inline keyboard |
+| **Slack** | `webhook_url` | Incoming webhook with Block Kit |
+
+### Permissions
+
+```yaml
+permissions:
+  guarded_operations:
+    - operation: "rm"
+      scope_type: "path"
+      require_approval: true
+    - operation: "git push --force"
+      scope_type: "repo"
+      require_approval: true
+    - operation: "trash"
+      scope_type: "path"
+      require_approval: false  # auto-approved inside workspace
 ```
 
 ---
 
 ## Wrappers
 
-Prepend `safe-` to guarded commands. Each wrapper:
-1. Checks vault for an active grant matching the scope
-2. If no grant → logs DENIED, exits 1, prints how to request one
-3. If grant found → executes the real command, logs SUCCESS
+Prepend `safe-` to guarded commands. Each checks the vault before executing.
 
-| Wrapper | Guards | Scope format |
-|---------|--------|-------------|
-| `safe-rm` | `rm` | path prefix match |
-| `safe-git-push` | `git push --force` | repo URL or path |
-| `safe-trash` | `trash` | path prefix match |
+```bash
+safe-rm -rf /tmp/build          # path scope — prefix matching
+safe-git-push --force origin    # repo scope — URL or path match
+safe-trash ~/Downloads/file     # path scope — prefix matching
+```
+
+If no grant exists, the wrapper prints:
+```
+Permission denied. Request one with: pvm request --scope /tmp/build --reason "..."
+```
+
+---
+
+## Daemon (Persistent Service)
+
+The `approve-daemon` runs three things simultaneously:
+
+1. **HTTP server** — listens for `/approve/<token>` and `/deny/<token>` GET/POST requests
+2. **Sendblue poller** — checks inbound iMessages every 15s for `APPROVE` or `DENY`
+3. **Email poller** — checks IMAP inbox every 30s for approval email replies
+
+### macOS launchd setup
+
+The plist is at `~/Library/LaunchAgents/ai.flume.pvm.plist`:
+
+```bash
+launchctl load ~/Library/LaunchAgents/ai.flume.pvm.plist   # start
+launchctl unload ~/Library/LaunchAgents/ai.flume.pvm.plist # stop
+```
+
+Logs: `~/flume/permission-vending-machine/pvm.log` and `pvm.err.log`
+
+---
+
+## Approval Flow (End-to-End)
+
+```
+1. Agent calls: pvm request --scope /tmp/build --reason cleanup --block
+2. Vault creates a pending permission_request with a unique token
+3. All enabled channels receive notification:
+   - Sendblue: iMessage to approver
+   - Email: SMTP email to approver
+   - Discord: webhook embed with "Click to approve" link
+4. Approver responds (any channel):
+   - APPROVE → grant created in vault, confirmation SMS sent
+   - DENY     → denial logged, confirmation SMS sent
+5. Polling thread in agent sees grant → unblocks
+6. safe-rm checks vault → grant found → executes
+```
 
 ---
 
@@ -132,78 +253,31 @@ Prepend `safe-` to guarded commands. Each wrapper:
 
 ```
 permission-vending-machine/
-├── README.md
-├── LICENSE
-├── pyproject.toml
-├── config.example.yaml
-├── src/
-│   ├── __init__.py
-│   ├── vault.py          # SQLite grant registry + audit log
-│   ├── models.py         # Grant, PermissionRequest, AuditEntry dataclasses
-│   ├── notifier.py       # Multicast dispatcher
-│   └── channels/
-│       ├── base.py       # Abstract NotificationChannel
-│       ├── sendblue.py   # Sendblue API (iMessage/SMS)
-│       ├── email.py      # SMTP email
-│       ├── discord.py    # Discord webhook
-│       ├── telegram.py   # Telegram bot API
-│       └── slack.py      # Slack webhook
-├── approval/
-│   ├── polling.py        # Poll approval sources
-│   └── callback.py       # Handle incoming approval callbacks
+├── config.example.yaml        # All configuration
+├── src/pvm/
+│   ├── vault.py               # SQLite registry — grants, requests, audit log
+│   ├── models.py              # Grant, PermissionRequest, AuditEntry dataclasses
+│   ├── notifier.py            # Multicast dispatcher → all channels
+│   ├── channels/
+│   │   ├── base.py           # NotificationChannel abstract class
+│   │   ├── sendblue.py       # Sendblue iMessage (CLI subprocess)
+│   │   ├── email.py          # SMTP email sender
+│   │   ├── discord.py        # Discord webhook embeds
+│   │   ├── telegram.py       # Telegram bot API
+│   │   └── slack.py         # Slack incoming webhooks
+│   ├── approval/
+│   │   ├── server.py         # Flask HTTP server (/approve, /deny)
+│   │   ├── daemon.py          # ApprovalDaemon — starts all pollers + HTTP
+│   │   ├── email_poller.py   # IMAP inbox polling for email approvals
+│   │   └── sendblue_poller.py # Sendblue CLI polling for iMessage approvals
+│   └── cli.py                # pvm CLI entry point
 ├── wrappers/
 │   ├── safe-rm
 │   ├── safe-git-push
 │   └── safe-trash
-├── skills/
-│   └── permission-guard/
-│       └── SKILL.md      # OpenClaw skill for agent integration
-├── tests/
-│   ├── test_vault.py
-│   ├── test_notifier.py
-│   └── test_wrappers.py
-└── docs/
-    ├── ARCHITECTURE.md
-    ├── DEPLOYMENT.md
-    └── CHANNELS.md
-```
-
-### Text Architecture Diagram
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         Agent Process                            │
-│  ┌──────────┐    ┌────────────────┐    ┌───────────────────┐  │
-│  │ safe-rm  │───>│  vault.py       │───>│  grants.db         │  │
-│  │ safe-push│    │  check_grant()  │    │  (SQLite)          │  │
-│  │ safe-trash│   │  create_grant() │    │                    │  │
-│  └──────────┘    │  log_audit()    │    └───────────────────┘  │
-│       │         └───────┬──────────┘                            │
-│       │                  │                                       │
-│       ▼                  ▼                                       │
-│  ┌─────────────────────────────────────────────────────────┐     │
-│  │                    notifier.py                          │     │
-│  │              notify_approvers(message)                  │     │
-│  └───────┬─────────┬─────────┬─────────┬──────────────────┘     │
-│          │         │         │         │                        │
-│          ▼         ▼         ▼         ▼                        │
-│    ┌─────────┐ ┌───────┐ ┌─────────┐ ┌─────────┐                │
-│    │Sendblue │ │ Email │ │ Discord │ │ Telegram│                │
-│    │(iMessage│ │ (SMTP)│ │webhook  │ │  bot    │                │
-│    │ /SMS)   │ └───────┘ └─────────┘ └─────────┘                │
-│    └─────────┘                              ┌─────────┐          │
-│                                              │ Slack   │          │
-│                                              └─────────┘          │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-                    ┌─────────────────┐
-                    │  Approver       │
-                    │ (human reviews  │
-                    │  notification,  │
-                    │  approves via   │
-                    │  reply/channel) │
-                    └─────────────────┘
+└── skills/
+    └── permission-guard/
+        └── SKILL.md           # OpenClaw skill for agent integration
 ```
 
 ---
@@ -212,6 +286,7 @@ permission-vending-machine/
 
 ```bash
 pytest tests/ -v
+# 35+ tests covering vault, notifier, wrappers
 ```
 
 ---
