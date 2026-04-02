@@ -1,5 +1,9 @@
 # Permission Vending Machine (PVM)
 
+<a href="https://clawhub.ai/skills/permission-vending-machine"><img src="https://img.shields.io/badge/Clawhub-install-ff6b00?style=flat" alt="Install via Clawhub"></a>
+<a href="https://github.com/tylerdotai/permission-vending-machine/blob/main/LICENSE"><img src="https://img.shields.io/pypi/l/pvm.svg" alt="license"></a>
+<a href="https://pypi.python.org/pypi/pvm/"><img src="https://img.shields.io/pypi/pyversions/pvm.svg" alt="python"></a>
+
 **Local multi-channel approval system for AI agent permissions.** PVM gates sensitive operations behind a human approver — notified via iMessage, Email, Discord, or clickable links — and enforces grants before running dangerous commands.
 
 ---
@@ -42,6 +46,20 @@ Agent                    PVM                       Approver
 ---
 
 ## Install
+
+### Via Clawhub (recommended)
+
+```bash
+# Install the skill into your OpenClaw skills directory
+clawhub install permission-vending-machine
+
+# Or with a specific version
+clawhub install permission-vending-machine --version 1.0.1
+```
+
+This installs the skill and SKILL.md to your OpenClaw skills folder. The skill then becomes available to all OpenClaw agents.
+
+### Via Git
 
 ```bash
 git clone https://github.com/tylerdotai/permission-vending-machine.git
