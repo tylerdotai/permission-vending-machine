@@ -176,13 +176,9 @@ class EmailPoller:
         addr_match = re.search(r"<(.+?)>|^(.+?)$", from_addr)
         email_addr = addr_match.group(1) or addr_match.group(2) if addr_match else from_addr
 
-        # Extract token from body
+        # Extract token from body (optional — caller may resolve to most recent pending)
         token_match = TOKEN_RE.search(body)
-        if not token_match:
-            logger.warning("No approval token found in email body")
-            return None
-
-        approval_token = token_match.group(1)
+        approval_token = token_match.group(1) if token_match else ""
         return EmailApproval(
             approval_token=approval_token,
             decision=decision,

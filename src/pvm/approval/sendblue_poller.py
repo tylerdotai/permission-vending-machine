@@ -101,18 +101,21 @@ class SendbluePoller:
            IN Mar 26, 10:01 PM  +1 (945) 269-2639 [RECEIVED]
              APPROVE tok_abc123
 
-        Returns list of SendblueApproval objects.
+        Also handles bare "APPROVE" or "DENY" (no token) — caller will
+        resolve to the most recent pending request.
         """
         approvals = []
         i = 0
         while i < len(lines):
             line = lines[i].strip()
-            # Look for inbound message header
             if line.startswith("IN ") and "[RECEIVED]" in line:
-                # Extract phone number
-                num_match = re.search(r"\+?[\d\(\)\s\-]+", line)
-                from_number = num_match.group(0).strip() if num_match else ""
-                # Consume continuation lines (message body)
+                # Extract full phone number with regex — handles split tokens
+                # Format: "IN Apr 2, 4:58 PM  +1 (945) 269-2639 [RECEIVED]"
+                phone_match = re.search(r"\+?\d[\d\s\-\(\)]+?\d(?=\s*\[)", line)
+                if phone_match:
+                    from_number = phone_match.group(0).strip()
+                else:
+                    from_number = ""
                 body_lines = []
                 i += 1
                 while i < len(lines) and lines[i] and lines[i][0] in " \t":
@@ -126,17 +129,13 @@ class SendbluePoller:
                 elif "DENY" in body:
                     decision = "DENY"
                 else:
-                    i += 1
                     continue
 
-                # Extract token
+                # Try to extract token; if not found, leave token empty
+                # (caller will resolve to most recent pending request)
                 token_match = TOKEN_RE.search(body)
-                if not token_match:
-                    logger.warning("No token in Sendblue message: %s", body)
-                    i += 1
-                    continue
+                approval_token = token_match.group(1) if token_match else ""
 
-                approval_token = token_match.group(1)
                 approvals.append(SendblueApproval(
                     approval_token=approval_token,
                     decision=decision,

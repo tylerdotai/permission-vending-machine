@@ -105,9 +105,13 @@ class ApprovalDaemon:
 
     def _run_email_poller(self) -> None:
         from .email_poller import EmailPoller
+        # Use dedicated imap_host if set, otherwise derive from smtp_host
+        imap_host = self._email_cfg.get("imap_host", "imap.mail.me.com")
+        if "imap" not in imap_host:
+            imap_host = imap_host.replace("smtp", "imap")
         poller = EmailPoller(
-            imap_host=self._email_cfg["smtp_host"],  # reuse same host for IMAP
-            imap_port=993,
+            imap_host=imap_host,
+            imap_port=int(self._email_cfg.get("imap_port", 993)),
             username=self._email_cfg["username"],
             password=self._email_cfg["password"],
         )
@@ -155,44 +159,44 @@ class ApprovalDaemon:
 
     def _handle_http_approve(self, token: str, approver: str) -> None:
         """Create a grant from an approved request."""
-        # Look up the request by token in the audit log
-        entries = self.vault.get_audit_log(limit=1000)
-        # Find the most recent REQUEST entry with this token in details
-        matching = [
-            e for e in entries
-            if f"token={token}" in (e.details or "")
-            or token in (e.details or "")
-        ]
-        if not matching:
-            logger.warning("No request found for token=%s — cannot create grant", token)
+        # Look up the request — by token if provided, otherwise most recent pending
+        req = None
+        if token:
+            req = self.vault.get_request_by_token(token)
+            if req:
+                logger.info("Found pending request by token=%s: agent=%s scope=%s",
+                            token, req["agent_id"], req["scope"])
+
+        if not req:
+            # No token provided or not found — find most recent pending request
+            req = self.vault.get_most_recent_pending_request()
+            if req:
+                logger.info(
+                    "No token / not found — approving most recent pending: agent=%s scope=%s token=%s",
+                    req["agent_id"], req["scope"], req["approval_token"],
+                )
+
+        if not req:
+            logger.warning("No pending request found to approve")
             return
 
-        # Reconstruct request details from the audit entry
-        # Format: "Permission request created: req_xxx for /path"
-        latest = matching[0]
-        scope = latest.scope or ""
-        agent_id = latest.agent_id or "default"
-        scope_type = "path"  # default
-
         try:
-            # Parse out the actual request details from the audit entry
             grant = self.vault.create_grant(
-                agent_id=agent_id,
-                scope=scope,
-                scope_type=scope_type,
-                reason=f"Approved via PVM approval system by {approver}",
-                ttl_minutes=30,  # default TTL
+                agent_id=req["agent_id"],
+                scope=req["scope"],
+                scope_type=req["scope_type"],
+                reason=f"Approved via PVM by {approver}",
+                ttl_minutes=req["ttl_minutes"],
                 approved_by=approver,
+                approval_token=req["approval_token"],
             )
             logger.info(
-                "Grant %s created for agent=%s scope=%s (token=%s)",
-                grant.grant_id,
-                agent_id,
-                scope,
-                token,
+                "Grant %s created: agent=%s scope=%s (approved by %s)",
+                grant.grant_id, req["agent_id"], req["scope"], approver,
             )
         except Exception as exc:
-            logger.exception("Failed to create grant for token=%s", token)
+            logger.exception("Failed to create grant")
+
 
     def _handle_http_deny(self, token: str, approver: str) -> None:
         """Log a denial."""

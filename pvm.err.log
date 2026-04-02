@@ -1,0 +1,1219 @@
+/Users/soup/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+2026-04-02 16:53:21,592 [INFO] pvm.approval.daemon: Email poller started (interval=30s)
+2026-04-02 16:53:21,593 [INFO] pvm.approval.daemon: Sendblue poller started (interval=15s)
+2026-04-02 16:53:21,607 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:53:21,663 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 90, in _poll_once
+    conn = imaplib.IMAP4_SSL(self.host, self.port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1324, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1337, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1327, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 843, in create_connection
+    raise err
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 831, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+2026-04-02 16:53:21,769 [INFO] pvm.approval.daemon: Starting HTTP approval server on :7823
+2026-04-02 16:53:21,782 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:7823
+ * Running on http://192.168.0.104:7823
+2026-04-02 16:53:21,782 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-04-02 16:53:24,274 [INFO] werkzeug: 127.0.0.1 - - [02/Apr/2026 16:53:24] "GET / HTTP/1.1" 200 -
+2026-04-02 16:53:27,882 [INFO] werkzeug: 127.0.0.1 - - [02/Apr/2026 16:53:27] "GET / HTTP/1.1" 200 -
+2026-04-02 16:53:36,709 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:53:51,748 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:53:51,803 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 90, in _poll_once
+    conn = imaplib.IMAP4_SSL(self.host, self.port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1324, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1337, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1327, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 843, in create_connection
+    raise err
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 831, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+2026-04-02 16:54:06,852 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:54:21,944 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 90, in _poll_once
+    conn = imaplib.IMAP4_SSL(self.host, self.port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1324, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1337, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1327, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 843, in create_connection
+    raise err
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 831, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+2026-04-02 16:54:21,953 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:54:36,961 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:54:52,062 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:54:52,096 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 90, in _poll_once
+    conn = imaplib.IMAP4_SSL(self.host, self.port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1324, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1337, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1327, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 843, in create_connection
+    raise err
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 831, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+2026-04-02 16:55:07,168 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+/Users/soup/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+2026-04-02 16:55:22,111 [INFO] pvm.approval.daemon: Email poller started (interval=30s)
+2026-04-02 16:55:22,111 [INFO] pvm.approval.daemon: Sendblue poller started (interval=15s)
+2026-04-02 16:55:22,125 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:55:22,278 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 90, in _poll_once
+    conn = imaplib.IMAP4_SSL(self.host, self.port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1324, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1337, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1327, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 843, in create_connection
+    raise err
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 831, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+2026-04-02 16:55:22,337 [INFO] pvm.approval.daemon: Starting HTTP approval server on :7823
+2026-04-02 16:55:22,352 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:7823
+ * Running on http://192.168.0.104:7823
+2026-04-02 16:55:22,352 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-04-02 16:55:24,699 [INFO] werkzeug: 127.0.0.1 - - [02/Apr/2026 16:55:24] "GET / HTTP/1.1" 200 -
+2026-04-02 16:55:37,227 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:55:52,330 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:55:52,437 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 90, in _poll_once
+    conn = imaplib.IMAP4_SSL(self.host, self.port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1324, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1337, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1327, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 843, in create_connection
+    raise err
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 831, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+2026-04-02 16:56:07,436 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:56:22,539 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:56:22,594 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 90, in _poll_once
+    conn = imaplib.IMAP4_SSL(self.host, self.port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1324, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1337, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1327, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 843, in create_connection
+    raise err
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 831, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+2026-04-02 16:56:37,647 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:56:52,756 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:56:52,870 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 90, in _poll_once
+    conn = imaplib.IMAP4_SSL(self.host, self.port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1324, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1337, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1327, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 843, in create_connection
+    raise err
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 831, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+2026-04-02 16:57:07,862 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:57:22,966 [WARNING] pvm.approval.sendblue_poller: sendblue CLI error: [Errno 2] No such file or directory: 'sendblue'
+2026-04-02 16:57:23,058 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 90, in _poll_once
+    conn = imaplib.IMAP4_SSL(self.host, self.port)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1324, in __init__
+    IMAP4.__init__(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 202, in __init__
+    self.open(host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1337, in open
+    IMAP4.open(self, host, port, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 312, in open
+    self.sock = self._create_socket(timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 1327, in _create_socket
+    sock = IMAP4._create_socket(self, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/imaplib.py", line 302, in _create_socket
+    return socket.create_connection(address)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 843, in create_connection
+    raise err
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/socket.py", line 831, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+2026-04-02 16:57:28,056 [INFO] pvm.approval.server: APPROVE received via HTTP: token=tok_notoken_0538a6973917
+2026-04-02 16:57:28,057 [INFO] pvm.approval.daemon: Found pending request by token=tok_notoken_0538a6973917: agent=hoss scope=/tmp/no-token-test
+2026-04-02 16:57:28,060 [INFO] pvm.approval.daemon: Grant grant_bb2825b0341f created: agent=hoss scope=/tmp/no-token-test (approved by Tyler)
+2026-04-02 16:57:28,060 [INFO] werkzeug: 192.168.0.104 - - [02/Apr/2026 16:57:28] "GET /approve/tok_notoken_0538a6973917 HTTP/1.1" 200 -
+2026-04-02 16:57:29,252 [INFO] werkzeug: 192.168.0.104 - - [02/Apr/2026 16:57:29] "GET / HTTP/1.1" 200 -
+/Users/soup/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+2026-04-02 16:57:39,654 [INFO] pvm.approval.daemon: Email poller started (interval=30s)
+2026-04-02 16:57:39,655 [INFO] pvm.approval.daemon: Sendblue poller started (interval=15s)
+2026-04-02 16:57:39,955 [INFO] pvm.approval.daemon: Starting HTTP approval server on :7823
+2026-04-02 16:57:39,969 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:7823
+ * Running on http://192.168.0.104:7823
+2026-04-02 16:57:39,970 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-04-02 16:57:40,774 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:40,774 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:40,775 [INFO] pvm.approval.daemon: No token / not found — approving most recent pending: agent=hoss scope=/tmp/launchd-test token=tok_launchd_6cacb199521f
+2026-04-02 16:57:40,778 [INFO] pvm.approval.daemon: Grant grant_ec6121806469 created: agent=hoss scope=/tmp/launchd-test (approved by )
+2026-04-02 16:57:40,778 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:40,779 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:40,779 [INFO] pvm.approval.daemon: No token / not found — approving most recent pending: agent=hoss scope=/tmp/final-test token=tok_final_0727d6540fac
+2026-04-02 16:57:40,781 [INFO] pvm.approval.daemon: Grant grant_16f9f6152f78 created: agent=hoss scope=/tmp/final-test (approved by )
+2026-04-02 16:57:40,782 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:40,782 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:40,782 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:40,782 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:40,782 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:40,782 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:40,782 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:40,782 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:40,782 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:40,782 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:40,782 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:40,782 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:40,782 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:40,782 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:40,783 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:40,783 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:40,783 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:40,783 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:40,783 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:40,783 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:40,783 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:43,037 [INFO] werkzeug: 127.0.0.1 - - [02/Apr/2026 16:57:43] "GET / HTTP/1.1" 200 -
+2026-04-02 16:57:56,862 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:56,864 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:56,864 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:56,864 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:56,864 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:56,864 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:56,864 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:56,864 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:56,865 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:56,865 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:56,865 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:56,865 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:56,865 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:56,865 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:56,865 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:56,865 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:56,865 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:56,865 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:56,865 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:56,865 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:56,866 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:56,866 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:56,866 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:56,866 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:57:56,866 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:57:56,866 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:57:56,866 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:12,934 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:12,935 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:12,935 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:12,935 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:12,935 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:12,935 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:12,935 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:12,935 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:12,935 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:12,936 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:12,936 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:12,936 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:12,936 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:12,936 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:12,936 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:12,936 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:12,936 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:12,936 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:12,936 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:12,936 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:12,936 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:12,936 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:12,936 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:12,936 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:12,936 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:12,936 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:12,936 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:13,561 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 100, in _poll_once
+    email_ids = data[0].split()
+AttributeError: 'NoneType' object has no attribute 'split'
+2026-04-02 16:58:29,073 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:29,074 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:29,074 [INFO] pvm.approval.daemon: No token / not found — approving most recent pending: agent=hoss scope=/tmp/live2-test token=tok_live2_3f5bcba1e7b1
+2026-04-02 16:58:29,077 [INFO] pvm.approval.daemon: Grant grant_b923763eb732 created: agent=hoss scope=/tmp/live2-test (approved by )
+2026-04-02 16:58:29,077 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:29,077 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:29,077 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:29,077 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:29,077 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:29,078 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:29,078 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:29,078 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:29,078 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:29,078 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:29,078 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:29,078 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:29,078 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:29,078 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:29,078 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:29,078 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:29,079 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:29,079 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:29,079 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:29,079 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:29,079 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:29,079 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:29,079 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:29,079 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:45,209 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:45,210 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:45,211 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:45,211 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:45,211 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:45,211 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:45,211 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:45,211 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:45,211 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:45,211 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:45,211 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:45,212 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:45,212 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:45,212 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:45,212 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:45,212 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:45,212 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:45,212 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:45,212 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:45,212 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:45,212 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:45,212 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:45,212 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:45,212 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:45,212 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:45,212 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:45,212 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:58:45,212 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:58:45,212 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:58:45,212 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:01,510 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:01,511 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:01,511 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:01,512 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:01,512 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:01,512 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:01,512 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:01,512 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:01,512 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:01,512 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:01,512 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:01,512 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:01,512 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:01,512 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:01,512 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:01,513 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:01,513 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:01,513 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:01,513 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:01,513 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:01,513 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:01,513 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:01,513 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:01,513 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:01,513 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:01,513 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:01,513 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:01,514 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:01,514 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:01,514 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:16,023 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 100, in _poll_once
+    email_ids = data[0].split()
+AttributeError: 'NoneType' object has no attribute 'split'
+2026-04-02 16:59:17,715 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:17,716 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:17,717 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:17,717 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:17,717 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:17,717 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:17,717 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:17,717 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:17,717 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:17,717 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:17,717 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:17,718 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:17,718 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:17,718 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:17,718 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:17,718 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:17,718 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:17,718 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:17,718 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:17,718 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:17,718 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:17,718 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:17,719 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:17,719 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:17,719 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:17,719 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:17,719 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:17,719 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:17,719 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:17,719 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:33,938 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:33,940 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:33,941 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:33,941 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:33,941 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:33,941 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:33,941 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:33,941 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:33,941 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:33,941 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:33,941 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:33,941 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:33,941 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:33,941 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:33,941 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:33,942 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:33,942 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:33,942 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:33,942 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:33,942 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:33,942 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:33,942 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:33,942 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:33,942 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:33,942 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:33,942 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:33,942 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:33,942 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:33,942 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:33,942 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:46,820 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 100, in _poll_once
+    email_ids = data[0].split()
+AttributeError: 'NoneType' object has no attribute 'split'
+2026-04-02 16:59:50,188 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:50,189 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:50,190 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:50,190 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:50,190 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:50,190 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:50,190 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:50,190 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:50,190 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:50,190 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:50,191 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:50,191 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:50,191 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:50,191 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:50,191 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:50,191 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:50,191 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:50,191 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:50,191 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:50,191 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:50,192 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:50,192 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:50,192 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:50,192 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:50,192 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:50,192 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:50,192 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 16:59:50,192 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=
+2026-04-02 16:59:50,192 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=
+2026-04-02 16:59:50,192 [WARNING] pvm.approval.daemon: No pending request found to approve
+/Users/soup/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+2026-04-02 17:00:06,203 [INFO] pvm.approval.daemon: Email poller started (interval=30s)
+2026-04-02 17:00:06,204 [INFO] pvm.approval.daemon: Sendblue poller started (interval=15s)
+2026-04-02 17:00:06,460 [INFO] pvm.approval.daemon: Starting HTTP approval server on :7823
+2026-04-02 17:00:06,480 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:7823
+ * Running on http://192.168.0.104:7823
+2026-04-02 17:00:06,480 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-04-02 17:00:07,130 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 100, in _poll_once
+    email_ids = data[0].split()
+AttributeError: 'NoneType' object has no attribute 'split'
+2026-04-02 17:00:07,140 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=58
+2026-04-02 17:00:07,140 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=58
+2026-04-02 17:00:07,142 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:07,142 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=55
+2026-04-02 17:00:07,142 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=55
+2026-04-02 17:00:07,142 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:07,142 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=53
+2026-04-02 17:00:07,142 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=53
+2026-04-02 17:00:07,142 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:07,142 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=52
+2026-04-02 17:00:07,142 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=52
+2026-04-02 17:00:07,142 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:07,142 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=48
+2026-04-02 17:00:07,142 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=48
+2026-04-02 17:00:07,142 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:07,143 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=46
+2026-04-02 17:00:07,143 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=46
+2026-04-02 17:00:07,143 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:07,143 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=45
+2026-04-02 17:00:07,143 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=45
+2026-04-02 17:00:07,143 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:07,143 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=42
+2026-04-02 17:00:07,143 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=42
+2026-04-02 17:00:07,143 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:07,143 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=24
+2026-04-02 17:00:07,143 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=24
+2026-04-02 17:00:07,143 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:07,143 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=23
+2026-04-02 17:00:07,143 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=23
+2026-04-02 17:00:07,143 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:08,745 [INFO] werkzeug: 127.0.0.1 - - [02/Apr/2026 17:00:08] "GET / HTTP/1.1" 200 -
+2026-04-02 17:00:23,218 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=58
+2026-04-02 17:00:23,219 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=58
+2026-04-02 17:00:23,219 [INFO] pvm.approval.daemon: No token / not found — approving most recent pending: agent=hoss scope=/tmp/fixed-test token=tok_fixed_e3b35a2a9156
+2026-04-02 17:00:23,223 [INFO] pvm.approval.daemon: Grant grant_4d1f06ee0a81 created: agent=hoss scope=/tmp/fixed-test (approved by 58)
+2026-04-02 17:00:23,223 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=55
+2026-04-02 17:00:23,224 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=55
+2026-04-02 17:00:23,224 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:23,224 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=53
+2026-04-02 17:00:23,224 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=53
+2026-04-02 17:00:23,224 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:23,224 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=52
+2026-04-02 17:00:23,224 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=52
+2026-04-02 17:00:23,224 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:23,224 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=48
+2026-04-02 17:00:23,224 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=48
+2026-04-02 17:00:23,224 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:23,224 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=46
+2026-04-02 17:00:23,224 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=46
+2026-04-02 17:00:23,224 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:23,224 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=45
+2026-04-02 17:00:23,224 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=45
+2026-04-02 17:00:23,224 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:23,224 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=42
+2026-04-02 17:00:23,224 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=42
+2026-04-02 17:00:23,225 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:23,225 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=24
+2026-04-02 17:00:23,225 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=24
+2026-04-02 17:00:23,225 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:23,225 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=23
+2026-04-02 17:00:23,225 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=23
+2026-04-02 17:00:23,225 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:39,476 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=00
+2026-04-02 17:00:39,477 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=00
+2026-04-02 17:00:39,478 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:39,478 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=58
+2026-04-02 17:00:39,478 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=58
+2026-04-02 17:00:39,478 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:39,478 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=55
+2026-04-02 17:00:39,478 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=55
+2026-04-02 17:00:39,478 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:39,479 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=53
+2026-04-02 17:00:39,479 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=53
+2026-04-02 17:00:39,479 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:39,479 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=52
+2026-04-02 17:00:39,479 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=52
+2026-04-02 17:00:39,479 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:39,479 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=48
+2026-04-02 17:00:39,479 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=48
+2026-04-02 17:00:39,479 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:39,479 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=46
+2026-04-02 17:00:39,479 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=46
+2026-04-02 17:00:39,480 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:39,480 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=45
+2026-04-02 17:00:39,480 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=45
+2026-04-02 17:00:39,480 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:39,480 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=42
+2026-04-02 17:00:39,480 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=42
+2026-04-02 17:00:39,480 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:39,480 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=24
+2026-04-02 17:00:39,480 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=24
+2026-04-02 17:00:39,480 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:39,480 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=23
+2026-04-02 17:00:39,480 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=23
+2026-04-02 17:00:39,480 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:55,740 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=00
+2026-04-02 17:00:55,740 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=00
+2026-04-02 17:00:55,741 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:55,741 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=58
+2026-04-02 17:00:55,741 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=58
+2026-04-02 17:00:55,741 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:55,741 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=55
+2026-04-02 17:00:55,741 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=55
+2026-04-02 17:00:55,742 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:55,742 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=53
+2026-04-02 17:00:55,742 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=53
+2026-04-02 17:00:55,742 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:55,742 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=52
+2026-04-02 17:00:55,742 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=52
+2026-04-02 17:00:55,742 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:55,742 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=48
+2026-04-02 17:00:55,742 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=48
+2026-04-02 17:00:55,742 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:55,742 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=46
+2026-04-02 17:00:55,743 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=46
+2026-04-02 17:00:55,743 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:55,743 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=45
+2026-04-02 17:00:55,743 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=45
+2026-04-02 17:00:55,743 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:55,743 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=42
+2026-04-02 17:00:55,743 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=42
+2026-04-02 17:00:55,743 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:55,743 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=24
+2026-04-02 17:00:55,743 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=24
+2026-04-02 17:00:55,743 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:00:55,743 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=23
+2026-04-02 17:00:55,744 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=23
+2026-04-02 17:00:55,744 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:09,795 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 100, in _poll_once
+    email_ids = data[0].split()
+AttributeError: 'NoneType' object has no attribute 'split'
+2026-04-02 17:01:11,862 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=00
+2026-04-02 17:01:11,862 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=00
+2026-04-02 17:01:11,863 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:11,863 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=58
+2026-04-02 17:01:11,863 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=58
+2026-04-02 17:01:11,863 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:11,863 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=55
+2026-04-02 17:01:11,863 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=55
+2026-04-02 17:01:11,864 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:11,864 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=53
+2026-04-02 17:01:11,864 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=53
+2026-04-02 17:01:11,864 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:11,864 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=52
+2026-04-02 17:01:11,864 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=52
+2026-04-02 17:01:11,864 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:11,865 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=48
+2026-04-02 17:01:11,865 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=48
+2026-04-02 17:01:11,865 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:11,865 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=46
+2026-04-02 17:01:11,865 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=46
+2026-04-02 17:01:11,865 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:11,865 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=45
+2026-04-02 17:01:11,865 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=45
+2026-04-02 17:01:11,866 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:11,866 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=42
+2026-04-02 17:01:11,866 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=42
+2026-04-02 17:01:11,866 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:11,866 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=24
+2026-04-02 17:01:11,866 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=24
+2026-04-02 17:01:11,866 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:11,866 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=23
+2026-04-02 17:01:11,866 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=23
+2026-04-02 17:01:11,866 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:28,021 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=00
+2026-04-02 17:01:28,021 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=00
+2026-04-02 17:01:28,022 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:28,022 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=58
+2026-04-02 17:01:28,022 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=58
+2026-04-02 17:01:28,022 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:28,022 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=55
+2026-04-02 17:01:28,022 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=55
+2026-04-02 17:01:28,023 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:28,023 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=53
+2026-04-02 17:01:28,023 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=53
+2026-04-02 17:01:28,024 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:28,024 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=52
+2026-04-02 17:01:28,024 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=52
+2026-04-02 17:01:28,024 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:28,024 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=48
+2026-04-02 17:01:28,024 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=48
+2026-04-02 17:01:28,024 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:28,024 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=46
+2026-04-02 17:01:28,024 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=46
+2026-04-02 17:01:28,025 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:28,025 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=45
+2026-04-02 17:01:28,025 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=45
+2026-04-02 17:01:28,025 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:28,025 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=42
+2026-04-02 17:01:28,025 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=42
+2026-04-02 17:01:28,025 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:28,025 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=24
+2026-04-02 17:01:28,025 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=24
+2026-04-02 17:01:28,025 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:28,025 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=23
+2026-04-02 17:01:28,025 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=23
+2026-04-02 17:01:28,026 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:40,689 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 100, in _poll_once
+    email_ids = data[0].split()
+AttributeError: 'NoneType' object has no attribute 'split'
+2026-04-02 17:01:44,169 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=00
+2026-04-02 17:01:44,170 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=00
+2026-04-02 17:01:44,170 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:44,170 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=58
+2026-04-02 17:01:44,170 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=58
+2026-04-02 17:01:44,171 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:44,171 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=55
+2026-04-02 17:01:44,171 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=55
+2026-04-02 17:01:44,171 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:44,171 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=53
+2026-04-02 17:01:44,171 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=53
+2026-04-02 17:01:44,171 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:44,171 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=52
+2026-04-02 17:01:44,171 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=52
+2026-04-02 17:01:44,171 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:44,171 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=48
+2026-04-02 17:01:44,171 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=48
+2026-04-02 17:01:44,172 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:44,172 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=46
+2026-04-02 17:01:44,172 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=46
+2026-04-02 17:01:44,172 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:44,172 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=45
+2026-04-02 17:01:44,172 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=45
+2026-04-02 17:01:44,172 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:44,172 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=42
+2026-04-02 17:01:44,172 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=42
+2026-04-02 17:01:44,172 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:44,172 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=24
+2026-04-02 17:01:44,172 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=24
+2026-04-02 17:01:44,173 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:44,173 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=23
+2026-04-02 17:01:44,173 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=23
+2026-04-02 17:01:44,173 [WARNING] pvm.approval.daemon: No pending request found to approve
+/Users/soup/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+2026-04-02 17:01:58,191 [INFO] pvm.approval.daemon: Email poller started (interval=30s)
+2026-04-02 17:01:58,192 [INFO] pvm.approval.daemon: Sendblue poller started (interval=15s)
+2026-04-02 17:01:58,443 [INFO] pvm.approval.daemon: Starting HTTP approval server on :7823
+2026-04-02 17:01:58,460 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:7823
+ * Running on http://192.168.0.104:7823
+2026-04-02 17:01:58,460 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-04-02 17:01:59,219 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,219 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,220 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:59,220 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:59,221 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:59,221 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:59,221 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:59,221 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:59,221 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:59,221 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,221 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:59,221 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,222 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,222 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:59,222 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,222 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,222 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:59,222 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,222 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:01:59,223 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:01:59,645 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 100, in _poll_once
+    email_ids = data[0].split()
+AttributeError: 'NoneType' object has no attribute 'split'
+2026-04-02 17:02:00,695 [INFO] werkzeug: 127.0.0.1 - - [02/Apr/2026 17:02:00] "GET / HTTP/1.1" 200 -
+2026-04-02 17:02:15,139 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,140 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,140 [INFO] pvm.approval.daemon: No token / not found — approving most recent pending: agent=hoss scope=/tmp/v3-test token=tok_v3_6dda8d9e0cf1
+2026-04-02 17:02:15,143 [INFO] pvm.approval.daemon: Grant grant_cdceec8f0cd2 created: agent=hoss scope=/tmp/v3-test (approved by 269-2639)
+2026-04-02 17:02:15,143 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,143 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,143 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:15,143 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,143 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,143 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:15,143 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,143 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,143 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:15,143 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,143 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,143 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:15,143 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,143 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,144 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:15,144 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,144 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,144 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:15,144 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,144 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,144 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:15,144 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,144 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,144 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:15,144 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,144 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,144 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:15,144 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,144 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:15,144 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:31,246 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,247 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,248 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:31,249 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,249 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,249 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:31,249 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,249 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,249 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:31,249 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,249 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,250 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:31,250 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,250 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,250 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:31,250 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,250 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,250 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:31,250 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,250 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,250 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:31,250 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,250 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,251 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:31,251 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,251 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,251 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:31,251 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,251 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,251 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:31,251 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,251 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,251 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:31,252 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,252 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:31,252 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:47,404 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,404 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,405 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:47,405 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,405 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,405 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:47,405 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,405 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,405 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:47,405 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,406 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,406 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:47,406 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,406 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,406 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:47,407 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,407 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,407 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:47,407 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,407 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,407 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:47,407 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,407 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,407 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:47,407 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,407 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,407 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:47,407 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,407 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,407 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:47,407 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,407 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,407 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:02:47,407 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,407 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:02:47,408 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:02,740 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 100, in _poll_once
+    email_ids = data[0].split()
+AttributeError: 'NoneType' object has no attribute 'split'
+2026-04-02 17:03:03,646 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,647 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,647 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:03,647 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,647 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,648 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:03,648 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,648 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,648 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:03,648 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,648 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,648 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:03,648 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,648 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,649 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:03,649 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,649 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,649 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:03,649 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,649 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,649 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:03,649 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,649 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,649 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:03,649 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,649 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,649 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:03,649 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,650 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,650 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:03,650 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,650 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,650 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:03,650 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,650 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=269-2639
+2026-04-02 17:03:03,650 [WARNING] pvm.approval.daemon: No pending request found to approve
+/Users/soup/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+2026-04-02 17:03:10,387 [INFO] pvm.approval.daemon: Email poller started (interval=30s)
+2026-04-02 17:03:10,388 [INFO] pvm.approval.daemon: Sendblue poller started (interval=15s)
+2026-04-02 17:03:10,636 [INFO] pvm.approval.daemon: Starting HTTP approval server on :7823
+2026-04-02 17:03:10,653 [INFO] werkzeug: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:7823
+ * Running on http://192.168.0.104:7823
+2026-04-02 17:03:10,653 [INFO] werkzeug: [33mPress CTRL+C to quit[0m
+2026-04-02 17:03:11,175 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 100, in _poll_once
+    email_ids = data[0].split()
+AttributeError: 'NoneType' object has no attribute 'split'
+2026-04-02 17:03:11,388 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,388 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,390 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:11,390 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,390 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,390 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:11,390 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,390 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,391 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:11,391 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,391 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,391 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:11,391 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,391 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,391 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:11,391 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,391 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,392 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:11,392 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,392 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,392 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:11,392 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,392 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,392 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:11,392 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,392 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,392 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:11,392 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,392 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,393 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:11,393 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,393 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,393 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:11,393 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,393 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:11,393 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:12,887 [INFO] werkzeug: 127.0.0.1 - - [02/Apr/2026 17:03:12] "GET / HTTP/1.1" 200 -
+2026-04-02 17:03:27,326 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,327 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,327 [INFO] pvm.approval.daemon: No token / not found — approving most recent pending: agent=hoss scope=/tmp/v4-test token=tok_v4_7e0757e8248d
+2026-04-02 17:03:27,334 [INFO] pvm.approval.daemon: Grant grant_4d077fd133f0 created: agent=hoss scope=/tmp/v4-test (approved by +1 (945) 269-2639)
+2026-04-02 17:03:27,334 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,334 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,334 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:27,335 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,335 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,335 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:27,335 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,335 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,335 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:27,335 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,335 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,335 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:27,335 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,335 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,335 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:27,336 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,336 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,336 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:27,336 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,336 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,336 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:27,336 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,336 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,336 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:27,336 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,336 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,337 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:27,337 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,337 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,337 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:27,337 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,337 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:27,337 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:43,496 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,497 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,498 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:43,498 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,498 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,498 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:43,498 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,498 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,498 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:43,498 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,498 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,499 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:43,499 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,499 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,499 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:43,499 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,499 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,499 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:43,499 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,499 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,499 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:43,499 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,499 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,499 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:43,499 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,499 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,500 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:43,500 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,500 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,500 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:43,500 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,500 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,500 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:43,500 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,500 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,500 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:43,500 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,500 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:43,501 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:59,592 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,593 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,593 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:59,594 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,594 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,594 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:59,594 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,594 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,594 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:59,594 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,594 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,594 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:59,594 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,595 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,595 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:59,595 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,595 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,595 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:59,595 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,595 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,595 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:59,595 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,595 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,595 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:59,596 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,596 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,596 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:59,596 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,596 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,596 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:59,596 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,596 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,596 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:59,596 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,596 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,597 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:03:59,597 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,597 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:03:59,597 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:14,564 [ERROR] pvm.approval.email_poller: IMAP connection error
+Traceback (most recent call last):
+  File "/Users/soup/flume/permission-vending-machine/src/pvm/approval/email_poller.py", line 100, in _poll_once
+    email_ids = data[0].split()
+AttributeError: 'NoneType' object has no attribute 'split'
+2026-04-02 17:04:15,881 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,882 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,882 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:15,883 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,883 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,883 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:15,883 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,883 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,883 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:15,883 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,883 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,884 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:15,884 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,884 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,884 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:15,884 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,884 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,884 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:15,884 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,884 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,884 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:15,884 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,884 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,885 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:15,885 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,885 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,885 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:15,885 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,885 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,885 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:15,885 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,885 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,885 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:15,885 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,885 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,886 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:15,886 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,886 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:15,886 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:32,044 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,044 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,045 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:32,045 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,045 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,045 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:32,045 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,045 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,046 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:32,046 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,046 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,046 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:32,046 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,046 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,046 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:32,046 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,046 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,046 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:32,046 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,046 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,047 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:32,047 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,047 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,047 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:32,047 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,047 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,047 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:32,047 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,047 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,047 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:32,047 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,048 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,048 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:32,048 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,048 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,048 [WARNING] pvm.approval.daemon: No pending request found to approve
+2026-04-02 17:04:32,048 [INFO] pvm.approval.sendblue_poller: Sendblue approval detected: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,048 [INFO] pvm.approval.daemon: Approval decision: token= decision=APPROVE from=+1 (945) 269-2639
+2026-04-02 17:04:32,049 [WARNING] pvm.approval.daemon: No pending request found to approve

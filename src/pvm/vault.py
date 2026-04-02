@@ -239,6 +239,21 @@ class Vault:
             return None
         return dict(row)
 
+    def get_most_recent_pending_request(self) -> Optional[dict]:
+        """Get the most recently created pending request."""
+        with self._tx() as conn:
+            row = conn.execute(
+                """
+                SELECT * FROM permission_requests
+                WHERE status = 'pending'
+                ORDER BY created_at DESC
+                LIMIT 1
+                """,
+            ).fetchone()
+        if not row:
+            return None
+        return dict(row)
+
     def deny_request(self, approval_token: str, denied_by: str) -> None:
         """Mark a permission request as denied."""
         with self._tx() as conn:
