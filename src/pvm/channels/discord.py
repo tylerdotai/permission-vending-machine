@@ -15,8 +15,9 @@ DISCORD_MAX_LENGTH = 4096
 class DiscordChannel(NotificationChannel):
     name = "discord"
 
-    def __init__(self, webhook_url: str):
+    def __init__(self, webhook_url: str, http_approval_base: str = "http://localhost:8080"):
         self.webhook_url = webhook_url
+        self.http_approval_base = http_approval_base
 
     def send(
         self,
@@ -29,6 +30,9 @@ class DiscordChannel(NotificationChannel):
         ttl_minutes: Optional[int] = None,
         approver_name: Optional[str] = None,
     ) -> NotificationResult:
+        approve_url = f"{self.http_approval_base}/approve/{approval_token}"
+        deny_url = f"{self.http_approval_base}/deny/{approval_token}"
+
         embed = {
             "title": "🤖 Agent Permission Request",
             "color": 0xFF6B00,  # Tyler orange
@@ -46,10 +50,20 @@ class DiscordChannel(NotificationChannel):
                     "value": f"```\n{approval_token}\n```",
                     "inline": False,
                 },
+                {
+                    "name": "Approve",
+                    "value": f"[Click to approve]({approve_url})",
+                    "inline": False,
+                },
+                {
+                    "name": "Deny",
+                    "value": f"[Click to deny]({deny_url})",
+                    "inline": False,
+                },
             ],
             "description": message or "(no additional message)",
             "footer": {
-                "text": "React ✅ to APPROVE · React ❌ to DENY"
+                "text": "Or reply via iMessage/SMS with: APPROVE token\nOr reply to approval email"
             },
         }
 

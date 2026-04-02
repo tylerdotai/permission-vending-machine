@@ -100,6 +100,7 @@ class Notifier:
         if dc.get("enabled"):
             self.channels["discord"] = DiscordChannel(
                 webhook_url=dc["webhook_url"],
+                http_approval_base=dc.get("http_approval_base", "http://localhost:8080"),
             )
             logger.info("Registered Discord channel")
 
