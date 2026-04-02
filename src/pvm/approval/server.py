@@ -54,7 +54,7 @@ def create_app(
             },
         }
 
-    @app.route("/approve/<token>", methods=["POST"])
+    @app.route("/approve/<token>", methods=["GET", "POST"])
     def approve(token: str):
         logger.info("APPROVE received via HTTP: token=%s", token)
         try:
@@ -64,7 +64,7 @@ def create_app(
             logger.exception("Approve failed for token %s", token)
             return jsonify({"status": "error", "message": str(exc)}), 500
 
-    @app.route("/deny/<token>", methods=["POST"])
+    @app.route("/deny/<token>", methods=["GET", "POST"])
     def deny(token: str):
         logger.info("DENY received via HTTP: token=%s", token)
         try:
