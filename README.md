@@ -49,17 +49,22 @@ Agent                    PVM                       Approver
 
 ## Install
 
-### Via Clawhub (recommended)
+## Install
+
+### Interactive Setup Wizard (recommended)
 
 ```bash
-# Install the skill into your OpenClaw skills directory
-clawhub install permission-vending-machine
-
-# Or with a specific version
-clawhub install permission-vending-machine --version 1.0.1
+pip install -e .
+pvm init
 ```
 
-This installs the skill and SKILL.md to your OpenClaw skills folder. The skill then becomes available to all OpenClaw agents.
+The wizard detects your OS, checks prerequisites, walks through channel configuration, and sets up the service automatically.
+
+### Via Clawhub
+
+```bash
+clawhub install permission-vending-machine
+```
 
 ### Via Git
 
@@ -69,7 +74,7 @@ cd permission-vending-machine
 pip install -e .
 ```
 
-**Requirements:** Python 3.9+, `sendblue` CLI (for iMessage), SQLite
+**Requirements:** Python 3.9+, `sendblue` CLI (for iMessage on macOS), SQLite
 
 ---
 
