@@ -1,0 +1,128 @@
+#!/usr/bin/env bash
+# safe-git-push — git push wrapper that checks PVM force-push grants
+#
+# Usage: safe-git-push [--agent <id>] [--grant-scope <repo>] [--no-request] <args>...
+#
+# Guards `git push --force` operations. Scope defaults to the current remote URL.
+# Intercepts --force / -f flags. Exits 1 if no grant found.
+
+set -euo pipefail
+
+PVM_DB="${PVM_DB:-./grants.db}"
+PVM_AGENT_ID="${PVM_AGENT_ID:-${AGENT_ID:-default}}"
+SCOPE_TYPE="repo"
+NO_REQUEST=false
+GRANT_SCOPE=""
+FORCE_DETECTED=false
+
+# ── Parse args ──────────────────────────────────────────────────────────────
+REAL_ARGS=()
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --force|-f)
+      FORCE_DETECTED=true
+      REAL_ARGS+=("$1")
+      shift ;;
+    --agent)
+      PVM_AGENT_ID="$2"; shift 2 ;;
+    --grant-scope)
+      GRANT_SCOPE="$2"; shift 2 ;;
+    --no-request)
+      NO_REQUEST=true; shift ;;
+    --)
+      shift; REAL_ARGS+=("$@"); break ;;
+    *)
+      REAL_ARGS+=("$1"); shift ;;
+  esac
+done
+set -- "${REAL_ARGS[@]+${REAL_ARGS[@]}}"
+
+# Auto-detect repo scope from git remote
+if [[ -z "$GRANT_SCOPE" ]]; then
+  if git rev-parse --git-dir > /dev/null 2>&1; then
+    REMOTE_URL=$(git remote get-url origin 2>/dev/null || echo "")
+    if [[ -n "$REMOTE_URL" ]]; then
+      GRANT_SCOPE="$REMOTE_URL"
+    else
+      GRANT_SCOPE="$(git rev-parse --show-toplevel 2>/dev/null || echo 'unknown')"
+    fi
+  else
+    GRANT_SCOPE="unknown"
+  fi
+fi
+
+# ── Check grant via Python ───────────────────────────────────────────────────
+check_grant() {
+  python3 - <<'PYEOF'
+import sys, sqlite3, os
+from datetime import datetime, timezone
+
+db_path = os.environ.get("PVM_DB", "./grants.db")
+agent_id = os.environ.get("PVM_AGENT_ID", "default")
+scope = os.environ.get("GRANT_SCOPE", "")
+
+if not scope:
+    print("safe-git-push: no scope specified", file=sys.stderr)
+    sys.exit(2)
+
+conn = sqlite3.connect(db_path)
+conn.row_factory = sqlite3.Row
+cur = conn.cursor()
+
+now_iso = datetime.now(timezone.utc).isoformat()
+cur.execute("""
+    SELECT 1 FROM grants
+    WHERE agent_id = ?
+      AND scope    = ?
+      AND revoked  = 0
+      AND expires_at > ?
+    LIMIT 1
+""", (agent_id, scope, now_iso))
+
+sys.exit(0 if cur.fetchone() else 1)
+PYEOF
+}
+
+export PVM_DB PVM_AGENT_ID GRANT_SCOPE
+
+if ! check_grant; then
+  if [[ "$NO_REQUEST" == "true" ]]; then
+    echo "safe-git-push: permission denied — no active grant for '$GRANT_SCOPE'" >&2
+    exit 1
+  fi
+  echo "" >&2
+  echo "❌  safe-git-push: permission denied" >&2
+  echo "" >&2
+  echo "  No active grant found for force-push to: $GRANT_SCOPE" >&2
+  echo "" >&2
+  echo "  Request one with:" >&2
+  echo "    pvm request scope='$GRANT_SCOPE' reason='<why>' duration=<minutes>" >&2
+  echo "" >&2
+  exit 1
+fi
+
+# Log SUCCESS
+python3 - <<'PYEOF'
+import sqlite3, os, uuid
+from datetime import datetime, timezone
+
+db_path = os.environ.get("PVM_DB", "./grants.db")
+agent_id = os.environ.get("PVM_AGENT_ID", "default")
+scope = os.environ.get("GRANT_SCOPE", "")
+
+try:
+    conn = sqlite3.connect(db_path)
+    now_iso = datetime.now(timezone.utc).isoformat()
+    conn.execute("""
+        INSERT INTO audit_log (entry_id, timestamp, entry_type, agent_id, scope, decision, details, grant_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """, (f"audit_{uuid.uuid4().hex[:12]}", now_iso, "EXECUTION",
+          agent_id, scope, "SUCCESS",
+          f"safe-git-push force executed: {scope}", None))
+    conn.commit()
+except Exception:
+    pass
+PYEOF
+
+exec git push "$@"

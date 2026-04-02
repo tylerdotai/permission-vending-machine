@@ -1,0 +1,144 @@
+#!/usr/bin/env bash
+# safe-rm — rm wrapper that checks PVM grants before executing
+#
+# Usage: safe-rm [rm options] <path>...
+#   --grant-scope <scope>    Override scope (default: first path arg)
+#   --agent <id>             Agent ID (default: $PVM_AGENT_ID or "default")
+#   --no-request             Don't request a grant, just check existing ones
+#
+# If no active grant is found and --no-request is not set, prints how to
+# request a grant and exits 1.
+
+set -euo pipefail
+
+PVM_DB="${PVM_DB:-./grants.db}"
+PVM_AGENT_ID="${PVM_AGENT_ID:-${AGENT_ID:-default}}"
+SCOPE_TYPE="path"
+NO_REQUEST=false
+
+# ── Parse args ──────────────────────────────────────────────────────────────
+REQUEST_ARGS=()
+GRANT_SCOPE=""
+POSITIONAL=()
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --grant-scope)
+      GRANT_SCOPE="$2"; shift 2 ;;
+    --agent)
+      PVM_AGENT_ID="$2"; shift 2 ;;
+    --no-request)
+      NO_REQUEST=true; shift ;;
+    --)
+      shift; POSITIONAL+=("$@"); break ;;
+    *)
+      POSITIONAL+=("$1"); shift ;;
+  esac
+done
+set -- "${POSITIONAL[@]+${POSITIONAL[@]}}"
+
+# Default scope = first path argument
+if [[ -z "$GRANT_SCOPE" && ${#POSITIONAL[@]} -gt 0 ]]; then
+  GRANT_SCOPE="${POSITIONAL[0]}"
+fi
+
+# ── Check grant via Python ───────────────────────────────────────────────────
+check_grant() {
+  python3 - <<'PYEOF'
+import sys, sqlite3, os
+from datetime import datetime, timezone
+
+db_path = os.environ.get("PVM_DB", "./grants.db")
+agent_id = os.environ.get("PVM_AGENT_ID", "default")
+scope = os.environ.get("GRANT_SCOPE", "")
+
+if not scope:
+    print("safe-rm: no scope specified (provide --grant-scope or a path argument)", file=sys.stderr)
+    sys.exit(2)
+
+conn = sqlite3.connect(db_path)
+conn.row_factory = sqlite3.Row
+cur = conn.cursor()
+
+now_iso = datetime.now(timezone.utc).isoformat()
+cur.execute("""
+    SELECT 1 FROM grants
+    WHERE agent_id = ?
+      AND scope    = ?
+      AND revoked  = 0
+      AND expires_at > ?
+    LIMIT 1
+""", (agent_id, scope, now_iso))
+
+if cur.fetchone():
+    sys.exit(0)  # granted
+
+# Also try path prefix match
+cur.execute("""
+    SELECT scope FROM grants
+    WHERE agent_id = ?
+      AND scope_type = 'path'
+      AND revoked  = 0
+      AND expires_at > ?
+""", (agent_id, now_iso))
+
+for row in cur.fetchall():
+    grant_scope = row["scope"]
+    if scope == grant_scope or scope.startswith(grant_scope.rstrip("/") + "/"):
+        sys.exit(0)
+
+sys.exit(1)  # denied
+PYEOF
+}
+
+# ── Main ────────────────────────────────────────────────────────────────────
+if [[ -z "$GRANT_SCOPE" ]]; then
+  echo "safe-rm: error: no scope specified" >&2
+  echo "Usage: safe-rm [--agent <id>] [--grant-scope <scope>] [--no-request] <path>..." >&2
+  exit 2
+fi
+
+export PVM_DB PVM_AGENT_ID GRANT_SCOPE
+
+if ! check_grant; then
+  if [[ "$NO_REQUEST" == "true" ]]; then
+    echo "safe-rm: permission denied — no active grant for '$GRANT_SCOPE'" >&2
+    exit 1
+  fi
+  echo "" >&2
+  echo "❌  safe-rm: permission denied" >&2
+  echo "" >&2
+  echo "  No active grant found for: $GRANT_SCOPE" >&2
+  echo "" >&2
+  echo "  Request one with:" >&2
+  echo "    pvm request scope='$GRANT_SCOPE' reason='<why>' duration=<minutes>" >&2
+  echo "" >&2
+  exit 1
+fi
+
+# Log SUCCESS and execute
+python3 - <<'PYEOF'
+import sqlite3, os
+from datetime import datetime, timezone
+
+db_path = os.environ.get("PVM_DB", "./grants.db")
+agent_id = os.environ.get("PVM_AGENT_ID", "default")
+scope = os.environ.get("GRANT_SCOPE", "")
+
+try:
+    import uuid
+    conn = sqlite3.connect(db_path)
+    now_iso = datetime.now(timezone.utc).isoformat()
+    conn.execute("""
+        INSERT INTO audit_log (entry_id, timestamp, entry_type, agent_id, scope, decision, details, grant_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """, (f"audit_{uuid.uuid4().hex[:12]}", now_iso, "EXECUTION",
+          agent_id, scope, "SUCCESS",
+          f"safe-rm executed: {scope}", None))
+    conn.commit()
+except Exception:
+    pass  # non-fatal
+PYEOF
+
+# Execute the real rm
+command rm "$@"

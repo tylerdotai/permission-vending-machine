@@ -1,0 +1,159 @@
+#!/usr/bin/env bash
+# safe-trash — trash wrapper that checks PVM grants before executing
+#
+# Usage: safe-trash [trash options] <path>...
+#   --grant-scope <scope>    Override scope
+#   --agent <id>             Agent ID (default: $PVM_AGENT_ID or "default")
+#   --no-request             Don't request a grant, just check existing ones
+#
+# Note: safe-trash is more permissive — inside the configured workspace root
+# it's auto-approved; outside it requires a grant.
+
+set -euo pipefail
+
+PVM_DB="${PVM_DB:-./grants.db}"
+PVM_AGENT_ID="${PVM_AGENT_ID:-${AGENT_ID:-default}}"
+PVM_WORKSPACE_ROOT="${PVM_WORKSPACE_ROOT:-/Users/soup/workspace}"
+SCOPE_TYPE="path"
+NO_REQUEST=false
+GRANT_SCOPE=""
+
+# ── Parse args ──────────────────────────────────────────────────────────────
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --grant-scope)
+      GRANT_SCOPE="$2"; shift 2 ;;
+    --agent)
+      PVM_AGENT_ID="$2"; shift 2 ;;
+    --no-request)
+      NO_REQUEST=true; shift ;;
+    --)
+      shift; POSITIONAL+=("$@"); break ;;
+    *)
+      POSITIONAL+=("$1"); shift ;;
+  esac
+done
+set -- "${POSITIONAL[@]+${POSITIONAL[@]}}"
+
+if [[ -z "$GRANT_SCOPE" && ${#POSITIONAL[@]} -gt 0 ]]; then
+  GRANT_SCOPE="${POSITIONAL[0]}"
+fi
+
+# ── Is path inside workspace? ──────────────────────────────────────────────
+inside_workspace() {
+  local path="$1"
+  [[ "$path" == "$PVM_WORKSPACE_ROOT"/* || "$path" == "$PVM_WORKSPACE_ROOT" ]]
+}
+
+# ── Check grant via Python ──────────────────────────────────────────────────
+check_grant() {
+  python3 - <<'PYEOF'
+import sys, sqlite3, os
+from datetime import datetime, timezone
+
+db_path = os.environ.get("PVM_DB", "./grants.db")
+agent_id = os.environ.get("PVM_AGENT_ID", "default")
+scope = os.environ.get("GRANT_SCOPE", "")
+
+if not scope:
+    print("safe-trash: no scope specified", file=sys.stderr)
+    sys.exit(2)
+
+conn = sqlite3.connect(db_path)
+conn.row_factory = sqlite3.Row
+cur = conn.cursor()
+
+now_iso = datetime.now(timezone.utc).isoformat()
+
+# Try exact + prefix match
+cur.execute("""
+    SELECT scope FROM grants
+    WHERE agent_id = ?
+      AND scope_type = 'path'
+      AND revoked  = 0
+      AND expires_at > ?
+""", (agent_id, now_iso))
+
+for row in cur.fetchall():
+    gs = row["scope"]
+    if scope == gs or scope.startswith(gs.rstrip("/") + "/"):
+        sys.exit(0)
+
+sys.exit(1)
+PYEOF
+}
+
+export PVM_DB PVM_AGENT_ID GRANT_SCOPE
+
+# ── Determine if we need a grant ────────────────────────────────────────────
+NEEDS_GRANT=true
+if [[ -n "$GRANT_SCOPE" && -d "$GRANT_SCOPE" || -f "$GRANT_SCOPE" ]]; then
+  if inside_workspace "$GRANT_SCOPE"; then
+    NEEDS_GRANT=false
+    echo "[safe-trash] Inside workspace — no grant required" >&2
+  fi
+fi
+
+if [[ "$NEEDS_GRANT" == "true" ]]; then
+  if [[ "$NO_REQUEST" == "true" ]]; then
+    echo "safe-trash: permission denied — no active grant for '$GRANT_SCOPE'" >&2
+    exit 1
+  fi
+  if ! check_grant; then
+    echo "" >&2
+    echo "❌  safe-trash: permission denied" >&2
+    echo "" >&2
+    echo "  No active grant found for: $GRANT_SCOPE" >&2
+    echo "" >&2
+    echo "  Request one with:" >&2
+    echo "    pvm request scope='$GRANT_SCOPE' reason='<why>' duration=<minutes>" >&2
+    echo "" >&2
+    exit 1
+  fi
+fi
+
+# Log SUCCESS
+python3 - <<'PYEOF'
+import sqlite3, os, uuid
+from datetime import datetime, timezone
+
+try:
+    db_path = os.environ.get("PVM_DB", "./grants.db")
+    agent_id = os.environ.get("PVM_AGENT_ID", "default")
+    scope = os.environ.get("GRANT_SCOPE", "")
+    conn = sqlite3.connect(db_path)
+    now_iso = datetime.now(timezone.utc).isoformat()
+    conn.execute("""
+        INSERT INTO audit_log (entry_id, timestamp, entry_type, agent_id, scope, decision, details, grant_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """, (f"audit_{uuid.uuid4().hex[:12]}", now_iso, "EXECUTION",
+          agent_id, scope, "SUCCESS",
+          f"safe-trash executed: {scope}", None))
+    conn.commit()
+except Exception:
+    pass
+PYEOF
+
+# Find real trash command
+TRASH_CMD=""
+for candidate in trash "/usr/local/bin/trash" "$HOME/.local/bin/trash"; do
+  if command -v "$candidate" &>/dev/null; then
+    TRASH_CMD="$candidate"
+    break
+  fi
+done
+
+if [[ -z "$TRASH_CMD" ]]; then
+  # Fall back to macOS osascript trash
+  if command -v osascript &>/dev/null; then
+    for f in "$@"; do
+      osascript -e "tell application \"Finder\" to delete POSIX file \"$f\"" 2>/dev/null || true
+    done
+    exit 0
+  fi
+  echo "safe-trash: 'trash' command not found. Install it with: brew install trash" >&2
+  exit 127
+fi
+
+exec "$TRASH_CMD" "$@"
