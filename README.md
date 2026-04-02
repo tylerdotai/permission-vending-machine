@@ -291,6 +291,25 @@ pytest tests/ -v
 
 ---
 
+## Cross-Platform Support
+
+PVM runs on macOS, Linux, and Windows. See [PLATFORMS.md](docs/PLATFORMS.md) for detailed setup guides per platform.
+
+| Feature | macOS | Linux | Windows |
+|---------|-------|-------|---------|
+| Core vault + wrappers | ✅ | ✅ | ✅ |
+| Email (IMAP/SMTP) | ✅ | ✅ | ✅ |
+| Discord webhook | ✅ | ✅ | ✅ |
+| Telegram bot | ✅ | ✅ | ✅ |
+| Slack webhook | ✅ | ✅ | ✅ |
+| Sendblue iMessage | ✅ | ❌ | ❌ |
+| HTTP approval server | ✅ | ✅ | ✅ |
+| Service manager | launchd | systemd | NSSM/Task Scheduler |
+
+**Sendblue iMessage** works only on macOS (uses the local Messages app). For Linux/Windows, Discord webhook + clickable links is the recommended approval path.
+
+---
+
 ## License
 
 MIT — see [LICENSE](LICENSE)
