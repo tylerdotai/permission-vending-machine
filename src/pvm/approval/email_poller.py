@@ -87,7 +87,11 @@ class EmailPoller:
         """
         approvals = []
         try:
-            conn = imaplib.IMAP4_SSL(self.host, self.port)
+            import ssl as _ssl
+            context = _ssl.create_default_context()
+            context.check_hostname = False
+            context.verify_mode = _ssl.CERT_NONE
+            conn = imaplib.IMAP4_SSL(self.host, self.port, ssl_context=context)
             conn.login(self.username, self.password)
             conn.select(self.folder)
 

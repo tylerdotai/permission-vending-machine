@@ -162,12 +162,11 @@ def cmd_serve(args: argparse.Namespace) -> int:
     """Run the HTTP approval server (part of approve-daemon)."""
     vault = _vault(args.config)
 
-    from .approval.server import run_server
+    from .approval.server import create_app
 
     def on_approve(token: str, approver: str) -> None:
         req = vault.get_request_by_token(token)
         if not req:
-            # Fallback: create grant with defaults
             from .models import AuditEntryType, Decision
             entries = vault.get_audit_log(limit=1000)
             matching = [e for e in entries if token in (e.details or "")]
@@ -197,11 +196,15 @@ def cmd_serve(args: argparse.Namespace) -> int:
         vault.deny_request(token, approver)
         print(f"[server] Request denied: token={token} by={approver}")
 
+    app = create_app(on_approve=on_approve, on_deny=on_deny, approver_name=args.approver or "Tyler")
+
     print(f"Starting HTTP approval server on :{args.port}...")
     print("Endpoints:")
-    print(f"  POST /approve/<token>  — Approve a request")
-    print(f"  POST /deny/<token>    — Deny a request")
-    print(f"  GET  /                — Status page")
+    print(f"  GET /approve/<token>  — Approve a request")
+    print(f"  GET /deny/<token>    — Deny a request")
+    print(f"  GET /               — Status page")
+
+    from .approval.server import run_server
     run_server(
         on_approve=on_approve,
         on_deny=on_deny,
@@ -209,7 +212,7 @@ def cmd_serve(args: argparse.Namespace) -> int:
         port=args.port,
         approver_name=args.approver or "Tyler",
     )
-    return 0
+    return 0  # never reached — server runs in background process
 
 
 def cmd_approve_daemon(args: argparse.Namespace) -> int:
