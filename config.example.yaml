@@ -3,7 +3,7 @@
 # Environment variables supported: ${VAR_NAME}
 
 vault:
-  db_path: "./grants.db"
+  db_path: "/absolute/path/to/grants.db"
   default_ttl_minutes: 30
   max_ttl_minutes: 480
 

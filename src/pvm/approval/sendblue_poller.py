@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import logging
 import re
 import subprocess
@@ -29,29 +30,19 @@ class SendbluePoller:
     Uses `sendblue messages --inbound` to check for incoming messages
     containing APPROVE or DENY and an approval token.
 
-    Usage::
-
-        def on_approval(token: str, decision: str, from_number: str):
-            if decision == "APPROVE":
-                vault.create_grant(...)
-
-        poller = SendbluePoller()
-        poller.poll(on_approval=on_approval, interval_seconds=15)
+    Deduplication: tracks message hash to avoid re-processing the same
+    message across poll cycles.
     """
 
     def __init__(self):
-        pass
+        self._seen_hashes: set[str] = set()
+        self._processed: list[str] = []  # last N processed for idempotency
 
     def poll(
         self,
         on_approval: Callable[[str, str, str], None],
         interval_seconds: int = 15,
     ) -> None:
-        """
-        Run the Sendblue polling loop indefinitely.
-
-        `on_approval` is called with (approval_token, decision, from_number).
-        """
         while True:
             try:
                 self._poll_once(on_approval)
@@ -63,7 +54,6 @@ class SendbluePoller:
         self,
         on_approval: Callable[[str, str, str], None],
     ) -> list[SendblueApproval]:
-        """Check for new inbound messages with approval/denial."""
         approvals = []
 
         try:
@@ -81,9 +71,23 @@ class SendbluePoller:
             return []
 
         lines = result.stdout.strip().splitlines()
-        for approval in self._parse_output(lines):
+        new_approvals = self._parse_output(lines)
+
+        for approval in new_approvals:
+            # Idempotency: skip if we already processed this exact message
+            msg_hash = hashlib.md5(
+                f"{approval.from_number}:{approval.decision}:{approval.approval_token}".encode()
+            ).hexdigest()
+
+            if msg_hash in self._seen_hashes:
+                continue
+            self._seen_hashes.add(msg_hash)
+            # Keep set bounded
+            if len(self._seen_hashes) > 1000:
+                self._seen_hashes = set(list(self._seen_hashes)[-500:])
+
             logger.info(
-                "Sendblue approval detected: token=%s decision=%s from=%s",
+                "Sendblue approval: token=%s decision=%s from=%s",
                 approval.approval_token,
                 approval.decision,
                 approval.from_number,
@@ -109,13 +113,11 @@ class SendbluePoller:
         while i < len(lines):
             line = lines[i].strip()
             if line.startswith("IN ") and "[RECEIVED]" in line:
-                # Extract full phone number with regex — handles split tokens
-                # Format: "IN Apr 2, 4:58 PM  +1 (945) 269-2639 [RECEIVED]"
-                phone_match = re.search(r"\+?\d[\d\s\-\(\)]+?\d(?=\s*\[)", line)
-                if phone_match:
-                    from_number = phone_match.group(0).strip()
-                else:
-                    from_number = ""
+                # Extract full phone number
+                phone_match = re.search(r"\+?\d[\d\s\-\(\)]+?(?=\s*\[)", line)
+                from_number = phone_match.group(0).strip() if phone_match else ""
+
+                # Collect message body lines
                 body_lines = []
                 i += 1
                 while i < len(lines) and lines[i] and lines[i][0] in " \t":
@@ -131,8 +133,7 @@ class SendbluePoller:
                 else:
                     continue
 
-                # Try to extract token; if not found, leave token empty
-                # (caller will resolve to most recent pending request)
+                # Extract token if present
                 token_match = TOKEN_RE.search(body)
                 approval_token = token_match.group(1) if token_match else ""
 

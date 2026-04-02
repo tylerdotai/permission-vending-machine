@@ -93,8 +93,7 @@ class EmailPoller:
 
             # Search for unread PVM permission request emails
             typ, data = conn.search(None, '(UNSEEN SUBJECT "Agent Permission Request")')
-            if typ != "OK":
-                logger.warning("IMAP search failed: %s", typ)
+            if typ != "OK" or not data or not data[0]:
                 return []
 
             email_ids = data[0].split()
