@@ -132,7 +132,7 @@ class ApprovalDaemon:
             on_deny=self._handle_http_deny,
             host="0.0.0.0",
             port=self.http_port,
-            approver_name=self._approver_name,
+            approver_name=self._http_approver_name,
         )
 
     def _handle_approval(
