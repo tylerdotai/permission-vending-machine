@@ -1,3 +1,8 @@
+---
+name: permission-vending-machine
+description: "Multi-channel approval system for AI agent permissions. GATES sensitive operations (file deletion, git force-push) behind human approval. Notifies via iMessage, Email, Discord, Telegram, Slack — and enforces time-limited grants before dangerous commands run. Use when an agent needs permission to delete files, force-push, or perform destructive operations."
+---
+
 # Permission Vending Machine (PVM)
 
 **Multi-channel approval system for AI agent permissions.**
