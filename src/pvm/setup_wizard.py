@@ -384,10 +384,10 @@ def setup_macos_service(config_path: str, port: int, db_path: str) -> None:
     <string>ai.flume.pvm</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/Library/Developer/CommandLineTools/usr/bin/python3</string>
+        <string>/usr/bin/python3</string>
         <string>-m</string>
         <string>pvm</string>
-        <string>serve</string>
+        <string>approve-daemon</string>
         <string>--port</string>
         <string>{port}</string>
     </array>
@@ -430,7 +430,7 @@ After=network.target
 Type=simple
 User={os.environ.get('USER', 'root')}
 WorkingDirectory={Path(config_path).parent.absolute()}
-ExecStart=/usr/bin/python3 -m pvm serve --port {port}
+ExecStart=/usr/bin/python3 -m pvm approve-daemon --port {port}
 Restart=always
 RestartSec=10
 StandardOutput=append:{Path(db_path).parent.absolute()}/pvm.log
